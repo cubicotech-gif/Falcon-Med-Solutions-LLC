@@ -1,7 +1,7 @@
 'use client'
 
-import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
 import {
   Shield,
   HeartHandshake,
@@ -14,133 +14,102 @@ import {
 const features = [
   {
     icon: Shield,
+    num: '01',
     title: 'Medical-Grade Quality',
-    description: 'Every product meets rigorous FDA standards and healthcare regulations for patient safety.',
-    color: 'primary',
-    stat: '100%',
-    statLabel: 'Certified',
+    description: 'Every product meets rigorous FDA standards and healthcare regulations.',
   },
   {
     icon: HeartHandshake,
+    num: '02',
     title: 'Expert Consultation',
-    description: 'Our medical specialists provide personalized guidance for every patient\'s unique needs.',
-    color: 'accent',
-    stat: '1:1',
-    statLabel: 'Personal Care',
+    description: 'Personalized guidance from medical specialists for every unique need.',
   },
   {
     icon: Truck,
+    num: '03',
     title: 'Rapid Delivery',
-    description: 'Same-day and next-day delivery options to ensure patients get care when they need it.',
-    color: 'primary',
-    stat: '24h',
-    statLabel: 'Avg. Delivery',
+    description: 'Same-day and next-day delivery options across the Tri-State area.',
   },
   {
     icon: ShieldCheck,
+    num: '04',
     title: 'Warranty Protection',
-    description: 'Comprehensive warranty coverage and hassle-free replacements on all equipment.',
-    color: 'accent',
-    stat: '2yr',
-    statLabel: 'Full Coverage',
+    description: 'Comprehensive coverage and hassle-free replacements on all equipment.',
   },
   {
     icon: Headphones,
+    num: '05',
     title: 'Dedicated Support',
-    description: 'Round-the-clock customer support from knowledgeable healthcare professionals.',
-    color: 'primary',
-    stat: '24/7',
-    statLabel: 'Available',
+    description: 'Round-the-clock assistance from knowledgeable healthcare professionals.',
   },
   {
     icon: Zap,
+    num: '06',
     title: 'Quick Setup',
-    description: 'Professional installation and training to get patients comfortable and mobile faster.',
-    color: 'accent',
-    stat: '<1h',
-    statLabel: 'Setup Time',
+    description: 'Professional installation and training to get patients mobile faster.',
   },
 ]
 
 export function WhyChooseUs() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="relative py-28 lg:py-36 overflow-hidden">
-      <div className="absolute inset-0 bg-secondary-900" />
-      <div className="absolute inset-0 dot-grid opacity-20" />
-      <div className="absolute -top-60 -left-60 w-[600px] h-[600px] bg-primary-500/10 rounded-full blur-[100px]" />
-      <div className="absolute -bottom-40 -right-40 w-[400px] h-[400px] bg-accent-500/10 rounded-full blur-[80px]" />
+    <section ref={ref} className="relative py-28 lg:py-36 bg-[var(--ink)] overflow-hidden">
+      {/* Subtle grid lines */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{
+        backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)',
+        backgroundSize: '80px 80px'
+      }} />
 
-      <div className="relative max-w-7xl mx-auto px-6">
-        <div className="text-center max-w-2xl mx-auto mb-20">
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/10 text-primary-300 border border-white/10 mb-6"
+      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-10">
+        {/* Header */}
+        <div className="grid lg:grid-cols-2 gap-10 mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
           >
-            Why Choose Us
-          </motion.span>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1 }}
-            className="font-display text-4xl md:text-5xl tracking-tight text-white"
-          >
-            Committed to Your{' '}
-            <span className="text-primary-400">Health</span> &{' '}
-            <span className="text-accent-400">Comfort</span>
-          </motion.h2>
-
+            <span className="label-sm text-primary-400 mb-4 block">Why Choose Us</span>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-white tracking-tight leading-[1]">
+              Built on Trust,<br />
+              Driven by <span className="italic text-primary-400">Care</span>
+            </h2>
+          </motion.div>
           <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2 }}
-            className="mt-5 text-secondary-300 text-lg"
+            className="text-secondary-400 text-lg leading-relaxed self-end max-w-md"
           >
-            We go beyond supplying equipment — we deliver peace of mind.
+            We go beyond supplying equipment. From initial consultation to
+            aftercare, we&apos;re your dedicated partner in patient wellbeing.
           </motion.p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {features.map((feature, i) => {
-            const Icon = feature.icon
+        {/* Feature grid - 3x2 with left accent borders */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06] rounded overflow-hidden">
+          {features.map((f, i) => {
+            const Icon = f.icon
             return (
               <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                key={f.title}
+                initial={{ opacity: 0, y: 25 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
-                className="group relative rounded-2xl bg-white/[0.04] border border-white/[0.06] p-7 hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-500"
+                className="bg-[var(--ink)] p-8 lg:p-10 group hover:bg-white/[0.03] transition-colors duration-500"
               >
-                <div className="flex items-start justify-between mb-5">
-                  <div
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                      feature.color === 'primary'
-                        ? 'bg-primary-500/15 text-primary-400'
-                        : 'bg-accent-500/15 text-accent-400'
-                    }`}
-                  >
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <div className="text-right">
-                    <span className={`text-2xl font-bold ${
-                      feature.color === 'primary' ? 'text-primary-400' : 'text-accent-400'
-                    }`}>
-                      {feature.stat}
-                    </span>
-                    <p className="text-xs text-secondary-500">{feature.statLabel}</p>
+                <div className="flex items-start gap-5">
+                  <span className="font-display text-3xl text-white/10 leading-none shrink-0">
+                    {f.num}
+                  </span>
+                  <div>
+                    <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center mb-4 group-hover:border-primary-500/40 transition-colors">
+                      <Icon className="w-5 h-5 text-primary-400" />
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-2">{f.title}</h3>
+                    <p className="text-sm text-secondary-500 leading-relaxed">{f.description}</p>
                   </div>
                 </div>
-
-                <h3 className="text-lg font-bold text-white mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-sm text-secondary-400 leading-relaxed">
-                  {feature.description}
-                </p>
               </motion.div>
             )
           })}
