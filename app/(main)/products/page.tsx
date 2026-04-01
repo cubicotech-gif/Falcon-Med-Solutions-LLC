@@ -1,240 +1,256 @@
 'use client'
 
+import { useRef } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Phone } from 'lucide-react'
+import Link from 'next/link'
+import { motion, useInView } from 'framer-motion'
+import { Check, ArrowRight, Phone, ArrowUpRight } from 'lucide-react'
 import { useSiteImages } from '@/hooks/use-site-image'
 
-const defaultCategories = [
+const categories = [
   {
-    id: 'wheelchairs',
     name: 'Wheelchairs',
-    description: 'Premium manual and electric wheelchairs for enhanced mobility and comfort',
+    description: 'Premium wheelchairs designed for comfort, mobility, and independence.',
     products: [
       {
-        name: 'Manual Wheelchair - Standard',
-        description: 'Lightweight aluminum frame with adjustable footrests and padded armrests',
-        imageSlot: 'product_manual_wheelchair',
-        defaultImage: 'https://images.unsplash.com/photo-1583946099379-f9c9cb8bc030?w=600&q=80',
-        features: ['Foldable design', 'Weight capacity: 250 lbs', 'Adjustable height'],
+        name: 'Standard Wheelchair',
+        description: 'Durable, lightweight wheelchair with adjustable footrests and armrests for daily use.',
+        features: ['Lightweight aluminum frame', 'Adjustable footrests', 'Foldable design', 'Padded armrests'],
+        imageKey: 'product-wheelchair-standard',
+        defaultImage: 'https://images.unsplash.com/photo-1619204715997-1e8ed26753b0?w=600&q=80',
       },
       {
         name: 'Transport Wheelchair',
-        description: 'Compact and portable for easy transportation and storage',
-        imageSlot: 'product_transport_wheelchair',
-        defaultImage: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=600&q=80',
-        features: ['Ultra-lightweight', 'Easy to fold', 'Comfortable seat'],
+        description: 'Compact transport wheelchair ideal for travel and quick mobility needs.',
+        features: ['Ultra-lightweight', 'Compact fold', 'Swing-away footrests', 'Push handles'],
+        imageKey: 'product-wheelchair-transport',
+        defaultImage: 'https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=600&q=80',
       },
     ],
   },
   {
-    id: 'mobility-aids',
     name: 'Mobility Aids',
-    description: 'Walkers, canes, and crutches to support safe and confident movement',
+    description: 'Professional-grade support equipment for confident, safe movement.',
     products: [
       {
-        name: 'Folding Walker with Wheels',
-        description: 'Sturdy walker with smooth-rolling wheels and hand brakes',
-        imageSlot: 'product_folding_walker',
-        defaultImage: 'https://images.unsplash.com/photo-1610349907345-19bf89ce8e3e?w=600&q=80',
-        features: ['Padded seat', 'Storage basket', 'Adjustable height'],
+        name: 'Rollator Walker',
+        description: 'Four-wheel rollator with built-in seat, basket, and ergonomic hand brakes.',
+        features: ['Built-in seat', 'Storage basket', 'Hand brakes', 'Height adjustable'],
+        imageKey: 'product-rollator',
+        defaultImage: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80',
       },
       {
-        name: 'Aluminum Walking Cane',
-        description: 'Lightweight, adjustable cane with ergonomic grip',
-        imageSlot: 'product_walking_cane',
-        defaultImage: 'https://images.unsplash.com/photo-1584613132429-a50a3b5c0e86?w=600&q=80',
-        features: ['Height adjustable', 'Anti-slip tip', 'Ergonomic handle'],
+        name: 'Walking Cane',
+        description: 'Ergonomic walking cane with anti-slip base and comfortable grip handle.',
+        features: ['Ergonomic grip', 'Anti-slip base', 'Adjustable height', 'Lightweight'],
+        imageKey: 'product-cane',
+        defaultImage: 'https://images.unsplash.com/photo-1559757175-7cb056fba93d?w=600&q=80',
       },
     ],
   },
   {
-    id: 'diabetic-care',
     name: 'Diabetic Care',
-    description: 'Advanced glucose monitoring systems and diabetic supplies',
+    description: 'Comprehensive diabetes management equipment and monitoring supplies.',
     products: [
       {
-        name: 'Continuous Glucose Monitor (CGM)',
-        description: 'Real-time monitoring with smartphone connectivity',
-        imageSlot: 'product_cgm',
-        defaultImage: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80',
-        features: ['14-day sensor', 'Customizable alerts', 'Data tracking app'],
+        name: 'Blood Glucose Monitor',
+        description: 'Accurate, easy-to-use blood glucose monitoring system with digital display.',
+        features: ['Fast results', 'Large display', 'Memory storage', 'Auto-coding'],
+        imageKey: 'product-glucose',
+        defaultImage: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=600&q=80',
       },
       {
-        name: 'Blood Glucose Meter Kit',
-        description: 'Accurate testing with fast results and large display',
-        imageSlot: 'product_glucose_meter',
-        defaultImage: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80',
-        features: ['Large display', 'Memory storage', 'Lancing device included'],
+        name: 'Diabetic Supply Kit',
+        description: 'Complete diabetic care kit with testing strips, lancets, and carrying case.',
+        features: ['Complete kit', 'Travel case', 'Test strips', 'Lancet device'],
+        imageKey: 'product-diabetic-kit',
+        defaultImage: 'https://images.unsplash.com/photo-1583912267550-d6c7e3e5f3b2?w=600&q=80',
       },
     ],
   },
   {
-    id: 'orthopedic',
     name: 'Orthopedic Braces',
-    description: 'Medical-grade supports for knees, back, ankles, and wrists',
+    description: 'Medical-grade braces and supports for recovery and pain management.',
     products: [
       {
-        name: 'Knee Support Brace',
-        description: 'Adjustable compression brace for pain relief and stability',
-        imageSlot: 'product_knee_brace',
-        defaultImage: 'https://images.unsplash.com/photo-1620331925087-4a13be250c5d?w=600&q=80',
-        features: ['Dual stabilizers', 'Breathable material', 'Non-slip design'],
+        name: 'Knee Brace',
+        description: 'Adjustable knee brace with hinged support for stability during recovery.',
+        features: ['Hinged support', 'Adjustable straps', 'Breathable material', 'Comfortable fit'],
+        imageKey: 'product-knee-brace',
+        defaultImage: 'https://images.unsplash.com/photo-1559757175-7cb056fba93d?w=600&q=80',
       },
       {
-        name: 'Lumbar Back Support',
-        description: 'Lower back brace for posture correction and pain relief',
-        imageSlot: 'product_lumbar_support',
-        defaultImage: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80',
-        features: ['Adjustable compression', 'Moisture-wicking', 'Fits under clothing'],
+        name: 'Back Support Belt',
+        description: 'Lumbar support belt designed for comfort and effective back pain relief.',
+        features: ['Lumbar support', 'Compression fit', 'Breathable mesh', 'Adjustable'],
+        imageKey: 'product-back-support',
+        defaultImage: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80',
       },
     ],
   },
 ]
 
-// Collect all image slots for batch fetching
-const allProductSlots = defaultCategories.flatMap((cat) =>
-  cat.products.map((p) => ({ key: p.imageSlot, defaultUrl: p.defaultImage }))
-)
+function AnimatedSection({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
 export default function ProductsPage() {
-  const images = useSiteImages(allProductSlots)
-
-  const categories = defaultCategories.map((cat) => ({
-    ...cat,
-    products: cat.products.map((p) => ({
-      ...p,
-      image: images[p.imageSlot] || p.defaultImage,
-    })),
-  }))
+  const allImageSlots = categories.flatMap((cat) =>
+    cat.products.map((p) => ({ key: p.imageKey, defaultUrl: p.defaultImage }))
+  )
+  const images = useSiteImages(allImageSlots)
 
   return (
-    <div className="pt-24">
-      {/* Hero section */}
-      <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-stripe-pattern opacity-20"></div>
+    <>
+      {/* Hero */}
+      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-secondary-900 via-secondary-800 to-primary-900" />
+        <div className="absolute inset-0 dot-grid opacity-15" />
+        <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-primary-500/10 rounded-full blur-[100px]" />
+
         <div className="relative max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto"
+            className="max-w-3xl"
           >
-            <h1 className="font-display text-5xl lg:text-6xl font-bold mb-6">
+            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/10 text-primary-300 border border-white/10 mb-6">
               Our Products
+            </span>
+            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl tracking-tight text-white">
+              Medical <span className="text-primary-400">Equipment</span> Catalog
             </h1>
-            <p className="text-xl text-primary-200 mb-8">
-              Comprehensive range of certified medical equipment to support your health and mobility needs
+            <p className="mt-6 text-lg text-secondary-300 max-w-2xl leading-relaxed">
+              Browse our comprehensive selection of FDA-certified medical equipment,
+              each backed by expert guidance and quality assurance.
             </p>
-            <Button asChild size="lg" className="bg-accent hover:bg-accent-700 rounded-full">
-              <a href="tel:9084286253">
-                <Phone className="mr-2 h-5 w-5" />
-                Call for Expert Guidance
-              </a>
-            </Button>
           </motion.div>
         </div>
       </section>
 
-      {/* Products by category */}
-      {categories.map((category, categoryIndex) => (
+      {/* Categories */}
+      {categories.map((category, catIdx) => (
         <section
-          key={category.id}
-          id={category.id}
-          className={`py-20 ${categoryIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
+          key={category.name}
+          className={`py-20 lg:py-28 ${catIdx % 2 === 1 ? 'bg-gray-50/50' : ''}`}
         >
           <div className="max-w-7xl mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="mb-12"
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-1 h-8 bg-accent rounded-full"></div>
-                <h2 className="font-display text-4xl font-bold text-gray-900">
-                  {category.name}
-                </h2>
+            {/* Category Header */}
+            <AnimatedSection className="mb-14">
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="section-divider" />
+                    <span className="text-sm font-semibold text-primary-600 uppercase tracking-wider">
+                      Category {String(catIdx + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <h2 className="font-display text-3xl md:text-4xl tracking-tight text-secondary-900">
+                    {category.name}
+                  </h2>
+                  <p className="mt-2 text-secondary-500 max-w-lg">{category.description}</p>
+                </div>
               </div>
-              <p className="text-lg text-gray-600 max-w-2xl ml-5">
-                {category.description}
-              </p>
-            </motion.div>
+            </AnimatedSection>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              {category.products.map((product, productIndex) => (
-                <motion.div
-                  key={product.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: productIndex * 0.1, duration: 0.6 }}
-                >
-                  <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-300 border-0 shadow-md">
-                    <div className="relative h-64">
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+            {/* Products Grid */}
+            <div className="grid md:grid-cols-2 gap-6">
+              {category.products.map((product, i) => (
+                <AnimatedSection key={product.name}>
+                  <div className="bento-card group h-full">
+                    <div className="grid sm:grid-cols-2 h-full">
+                      {/* Image */}
+                      <div className="relative aspect-square sm:aspect-auto overflow-hidden">
+                        <Image
+                          src={images[product.imageKey] || product.defaultImage}
+                          alt={product.name}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/10" />
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-6 flex flex-col">
+                        <h3 className="text-xl font-bold text-secondary-900 group-hover:text-primary-600 transition-colors">
+                          {product.name}
+                        </h3>
+                        <p className="mt-2 text-sm text-secondary-500 leading-relaxed flex-grow">
+                          {product.description}
+                        </p>
+
+                        <ul className="mt-4 space-y-2">
+                          {product.features.map((f) => (
+                            <li key={f} className="flex items-center gap-2 text-sm text-secondary-600">
+                              <Check className="w-3.5 h-3.5 text-primary-500 shrink-0" />
+                              {f}
+                            </li>
+                          ))}
+                        </ul>
+
+                        <Link
+                          href="/contact"
+                          className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors group/btn"
+                        >
+                          Request Quote
+                          <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                        </Link>
+                      </div>
                     </div>
-                    <CardHeader>
-                      <CardTitle className="text-2xl">{product.name}</CardTitle>
-                      <CardDescription className="text-base">
-                        {product.description}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <h4 className="font-semibold text-sm text-gray-700 mb-3">Key Features:</h4>
-                      <ul className="space-y-2">
-                        {product.features.map((feature, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
-                            <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 flex-shrink-0"></span>
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                      <Button variant="outline" className="w-full mt-6 rounded-full">
-                        Request Quote
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+                  </div>
+                </AnimatedSection>
               ))}
             </div>
           </div>
         </section>
       ))}
 
-      {/* CTA section */}
-      <section className="py-20 bg-gradient-to-br from-primary-800 to-primary-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-stripe-pattern opacity-20"></div>
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent"></div>
-        <div className="relative max-w-4xl mx-auto px-6 text-center">
-          <h2 className="font-display text-4xl font-bold mb-6">
-            Need Help Choosing the Right Product?
-          </h2>
-          <p className="text-xl mb-8 text-primary-200">
-            Our experts are ready to assist you in finding the perfect medical equipment for your needs
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-accent hover:bg-accent-700 rounded-full">
-              <a href="tel:9084286253">
-                <Phone className="mr-2 h-5 w-5" />
-                (908) 428-6253
+      {/* Bottom CTA */}
+      <section className="relative py-24 lg:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800" />
+        <div className="absolute inset-0 dot-grid opacity-10" />
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-primary-400/15 rounded-full blur-[100px]" />
+
+        <div className="relative max-w-3xl mx-auto px-6 text-center">
+          <AnimatedSection>
+            <h2 className="font-display text-4xl md:text-5xl tracking-tight text-white">
+              Can&apos;t Find What You Need?
+            </h2>
+            <p className="mt-6 text-lg text-primary-100/80 max-w-xl mx-auto">
+              We carry a wide range of medical equipment. Contact us for a personalized
+              recommendation or to request a specific product.
+            </p>
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
+              <a
+                href="tel:+19084286253"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-white text-primary-700 font-bold rounded-full hover:bg-gray-50 transition-all hover:shadow-xl"
+              >
+                <Phone className="w-5 h-5" />
+                Call (908) 428-6253
               </a>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 rounded-full">
-              <a href="/contact">Schedule Consultation</a>
-            </Button>
-          </div>
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-3 px-8 py-4 bg-white/10 text-white font-semibold rounded-full border border-white/20 hover:bg-white/20 transition-all"
+              >
+                Free Consultation
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
-    </div>
+    </>
   )
 }

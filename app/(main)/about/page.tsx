@@ -1,194 +1,236 @@
 'use client'
 
 import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { Award, Heart, Shield, Users } from 'lucide-react'
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
+import { Heart, Shield, Award, Users, ArrowRight, Check } from 'lucide-react'
+import Link from 'next/link'
 import { useSiteImage } from '@/hooks/use-site-image'
 
 const values = [
   {
     icon: Heart,
     title: 'Patient-Centered Care',
-    description: 'Every decision we make prioritizes your health, comfort, and well-being.',
-    color: 'bg-accent-100 text-accent',
+    description: 'Every decision we make starts and ends with the patient\'s wellbeing and comfort.',
+    color: 'accent',
   },
   {
     icon: Shield,
     title: 'Quality Assurance',
-    description: 'All products meet rigorous medical standards and FDA certifications.',
-    color: 'bg-primary-100 text-primary',
+    description: 'Rigorous testing and FDA compliance ensure only the best reaches our customers.',
+    color: 'primary',
   },
   {
     icon: Award,
     title: 'Expert Guidance',
-    description: 'Our team brings decades of combined experience in medical equipment.',
-    color: 'bg-accent-100 text-accent',
+    description: 'Our team of medical specialists provides personalized support for every need.',
+    color: 'accent',
   },
   {
     icon: Users,
     title: 'Community Focus',
-    description: 'Proudly serving New Jersey families with personalized local service.',
-    color: 'bg-primary-100 text-primary',
+    description: 'We serve as a trusted healthcare partner to families and facilities across the region.',
+    color: 'primary',
   },
 ]
 
+const stats = [
+  { value: '15+', label: 'Years of Experience' },
+  { value: '500+', label: 'Happy Customers' },
+  { value: '1,000+', label: 'Products Delivered' },
+  { value: '100%', label: 'Quality Commitment' },
+]
+
+function AnimatedSection({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
 export default function AboutPage() {
-  const aboutImage = useSiteImage('about_story_image', 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=800&q=80')
+  const storyImage = useSiteImage(
+    'about-story',
+    'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80'
+  )
 
   return (
-    <div className="pt-24">
+    <>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-stripe-pattern opacity-20"></div>
+      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-secondary-900 via-secondary-800 to-primary-900" />
+        <div className="absolute inset-0 dot-grid opacity-15" />
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-primary-500/10 rounded-full blur-[100px]" />
+
         <div className="relative max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-3xl mx-auto"
+            className="max-w-3xl"
           >
-            <h1 className="font-display text-5xl lg:text-6xl font-bold mb-6">
-              About FalconMed Solutions
+            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/10 text-primary-300 border border-white/10 mb-6">
+              About Us
+            </span>
+            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl tracking-tight text-white">
+              About <span className="text-primary-400">FalconMed</span> Solutions
             </h1>
-            <p className="text-xl text-primary-200">
-              Your trusted partner in quality medical equipment and compassionate care since our founding
+            <p className="mt-6 text-lg text-secondary-300 max-w-2xl leading-relaxed">
+              For over 15 years, we&apos;ve been committed to improving lives through
+              premium medical equipment and compassionate service.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Story */}
-      <section className="py-20 bg-white">
+      {/* Story Section - Split layout */}
+      <section className="py-24 lg:py-32">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-1 h-8 bg-accent rounded-full"></div>
-                <h2 className="font-display text-4xl font-bold text-gray-900">Our Story</h2>
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            <AnimatedSection>
+              <div className="relative">
+                <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl shadow-primary-900/10">
+                  <Image
+                    src={storyImage}
+                    alt="FalconMed team"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary-900/30 via-transparent to-transparent" />
+                </div>
+
+                {/* Floating stat card */}
+                <div className="absolute -bottom-6 -right-6 glass-card rounded-2xl p-6 shadow-xl">
+                  <p className="font-display text-4xl text-primary-600">15+</p>
+                  <p className="text-sm text-secondary-500 mt-1">Years Serving<br />Our Community</p>
+                </div>
               </div>
-              <div className="space-y-4 text-gray-600 leading-relaxed">
-                <p>
-                  FalconMed Solutions was founded with a clear vision: to deliver premium medical equipment with the speed, precision, and reliability our name represents.
-                </p>
-                <p>
-                  We understand that medical equipment isn&apos;t just about products — it&apos;s about restoring independence, improving daily life, and providing peace of mind to families across New Jersey.
-                </p>
-                <p>
-                  Based in Hillsborough, NJ, our team of dedicated professionals combines deep expertise in medical equipment with genuine compassion for every customer we serve. We take pride in offering personalized consultations to ensure you get exactly what you need.
-                </p>
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl"
-            >
-              <Image
-                src={aboutImage}
-                alt="Medical professionals"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary-900/30 to-transparent"></div>
-            </motion.div>
+            </AnimatedSection>
+
+            <AnimatedSection>
+              <span className="pill-badge mb-6">Our Story</span>
+              <h2 className="font-display text-4xl md:text-5xl tracking-tight text-secondary-900">
+                A Legacy of<br />
+                <span className="text-gradient-blue">Compassionate Care</span>
+              </h2>
+              <p className="mt-6 text-secondary-500 leading-relaxed text-lg">
+                Founded with a simple mission — to make premium medical equipment
+                accessible to everyone who needs it. FalconMed Solutions has grown
+                from a small local supplier to a trusted name in healthcare.
+              </p>
+              <p className="mt-4 text-secondary-500 leading-relaxed">
+                We work directly with patients, caregivers, and healthcare
+                facilities to understand their unique challenges and provide
+                tailored solutions that improve quality of life.
+              </p>
+
+              <ul className="mt-8 space-y-3">
+                {['FDA-certified medical equipment', 'Personalized fitting and consultation', 'Insurance and billing assistance', 'Ongoing support and maintenance'].map((item) => (
+                  <li key={item} className="flex items-center gap-3">
+                    <span className="w-6 h-6 rounded-full bg-primary-50 flex items-center justify-center shrink-0">
+                      <Check className="w-3.5 h-3.5 text-primary-600" />
+                    </span>
+                    <span className="text-secondary-600 font-medium">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </AnimatedSection>
           </div>
         </div>
       </section>
 
-      {/* Values */}
-      <section className="py-20 bg-gray-50">
+      {/* Values - Bento Grid */}
+      <section className="py-24 lg:py-32 bg-gray-50/50">
         <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center max-w-3xl mx-auto mb-16"
-          >
-            <span className="inline-block px-4 py-1.5 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-4 uppercase tracking-wider">
-              Our Values
-            </span>
-            <h2 className="font-display text-4xl font-bold text-gray-900 mb-6">
-              Our Core Values
+          <AnimatedSection className="text-center max-w-2xl mx-auto mb-16">
+            <span className="pill-badge mb-4">Our Values</span>
+            <h2 className="font-display text-4xl md:text-5xl tracking-tight text-secondary-900">
+              What Drives <span className="text-gradient-blue">Everything</span> We Do
             </h2>
-            <p className="text-xl text-gray-600">
-              The principles that guide everything we do
-            </p>
-          </motion.div>
+          </AnimatedSection>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100"
-              >
-                <div className={`w-14 h-14 ${value.color} rounded-xl flex items-center justify-center mb-6`}>
-                  <value.icon className="h-7 w-7" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  {value.title}
-                </h3>
-                <p className="text-gray-600">
-                  {value.description}
-                </p>
-              </motion.div>
+          <div className="grid md:grid-cols-2 gap-5">
+            {values.map((value, i) => {
+              const Icon = value.icon
+              return (
+                <AnimatedSection key={value.title}>
+                  <div className="bento-card p-8 h-full">
+                    <div className="flex items-start gap-5">
+                      <div
+                        className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${
+                          value.color === 'primary'
+                            ? 'bg-primary-50 text-primary-600'
+                            : 'bg-accent-50 text-accent-600'
+                        }`}
+                      >
+                        <Icon className="w-7 h-7" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-secondary-900">{value.title}</h3>
+                        <p className="mt-2 text-secondary-500 leading-relaxed">{value.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                </AnimatedSection>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Band */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-600 via-primary-700 to-primary-800" />
+        <div className="absolute inset-0 dot-grid opacity-10" />
+
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, i) => (
+              <AnimatedSection key={stat.label} className="text-center">
+                <p className="font-display text-4xl md:text-5xl text-white">{stat.value}</p>
+                <p className="text-sm text-primary-200/70 mt-2">{stat.label}</p>
+              </AnimatedSection>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="py-20 bg-gradient-to-br from-primary-800 to-primary-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-stripe-pattern opacity-20"></div>
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent to-transparent"></div>
-        <div className="relative max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-12 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0 }}
-            >
-              <div className="text-5xl font-bold mb-2">15+</div>
-              <div className="text-primary-300">Years of Experience</div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
-              <div className="text-5xl font-bold mb-2">500+</div>
-              <div className="text-primary-300">Happy Customers</div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              <div className="text-5xl font-bold mb-2">1000+</div>
-              <div className="text-primary-300">Products Delivered</div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-            >
-              <div className="text-5xl font-bold mb-2">100%</div>
-              <div className="text-primary-300">Quality Guaranteed</div>
-            </motion.div>
-          </div>
+      {/* CTA */}
+      <section className="py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <AnimatedSection className="text-center max-w-2xl mx-auto">
+            <h2 className="font-display text-4xl md:text-5xl tracking-tight text-secondary-900">
+              Let&apos;s Work Together
+            </h2>
+            <p className="mt-6 text-lg text-secondary-500">
+              Ready to experience the FalconMed difference? Reach out to us today.
+            </p>
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-3 px-7 py-4 bg-primary-600 text-white font-semibold rounded-full hover:bg-primary-700 transition-all hover:shadow-xl hover:shadow-primary-500/20"
+              >
+                Get in Touch
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <Link
+                href="/products"
+                className="inline-flex items-center gap-2 px-7 py-4 bg-white text-secondary-700 font-semibold rounded-full border border-gray-200 hover:border-primary-200 hover:text-primary-600 transition-all"
+              >
+                View Products
+              </Link>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
-    </div>
+    </>
   )
 }

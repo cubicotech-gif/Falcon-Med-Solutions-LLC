@@ -1,96 +1,149 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Award, HeartHandshake, Truck, Shield, Phone, Clock } from 'lucide-react'
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
+import {
+  Shield,
+  HeartHandshake,
+  Truck,
+  ShieldCheck,
+  Headphones,
+  Zap,
+} from 'lucide-react'
 
 const features = [
   {
-    icon: Award,
+    icon: Shield,
     title: 'Medical-Grade Quality',
-    description: 'All products meet FDA standards and medical certifications for your safety and peace of mind.',
-    color: 'bg-primary-100 text-primary',
+    description: 'Every product meets rigorous FDA standards and healthcare regulations for patient safety.',
+    color: 'primary',
+    stat: '100%',
+    statLabel: 'Certified',
   },
   {
     icon: HeartHandshake,
     title: 'Expert Consultation',
-    description: 'Our knowledgeable team provides personalized guidance to help you choose the right equipment.',
-    color: 'bg-accent-100 text-accent',
+    description: 'Our medical specialists provide personalized guidance for every patient\'s unique needs.',
+    color: 'accent',
+    stat: '1:1',
+    statLabel: 'Personal Care',
   },
   {
     icon: Truck,
-    title: 'Fast Delivery',
-    description: 'Same-day delivery available in New Jersey. We understand urgency in medical needs.',
-    color: 'bg-primary-100 text-primary',
+    title: 'Rapid Delivery',
+    description: 'Same-day and next-day delivery options to ensure patients get care when they need it.',
+    color: 'primary',
+    stat: '24h',
+    statLabel: 'Avg. Delivery',
   },
   {
-    icon: Shield,
+    icon: ShieldCheck,
     title: 'Warranty Protection',
-    description: 'Comprehensive warranty coverage on all equipment for worry-free ownership.',
-    color: 'bg-accent-100 text-accent',
+    description: 'Comprehensive warranty coverage and hassle-free replacements on all equipment.',
+    color: 'accent',
+    stat: '2yr',
+    statLabel: 'Full Coverage',
   },
   {
-    icon: Phone,
+    icon: Headphones,
     title: 'Dedicated Support',
-    description: 'Always here when you need us. Call us during business hours for assistance or questions.',
-    color: 'bg-primary-100 text-primary',
+    description: 'Round-the-clock customer support from knowledgeable healthcare professionals.',
+    color: 'primary',
+    stat: '24/7',
+    statLabel: 'Available',
   },
   {
-    icon: Clock,
-    title: 'Quick Response',
-    description: "Average response time under 2 hours. Your health needs can't wait, and neither do we.",
-    color: 'bg-accent-100 text-accent',
+    icon: Zap,
+    title: 'Quick Setup',
+    description: 'Professional installation and training to get patients comfortable and mobile faster.',
+    color: 'accent',
+    stat: '<1h',
+    statLabel: 'Setup Time',
   },
 ]
 
 export function WhyChooseUs() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary-50 to-transparent"></div>
-      <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-gradient-to-tr from-accent-50/30 to-transparent"></div>
+    <section ref={ref} className="relative py-28 lg:py-36 overflow-hidden">
+      <div className="absolute inset-0 bg-secondary-900" />
+      <div className="absolute inset-0 dot-grid opacity-20" />
+      <div className="absolute -top-60 -left-60 w-[600px] h-[600px] bg-primary-500/10 rounded-full blur-[100px]" />
+      <div className="absolute -bottom-40 -right-40 w-[400px] h-[400px] bg-accent-500/10 rounded-full blur-[80px]" />
 
       <div className="relative max-w-7xl mx-auto px-6">
-        {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="max-w-3xl mb-16"
-        >
-          <span className="inline-block px-4 py-1.5 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-4 uppercase tracking-wider">
+        <div className="text-center max-w-2xl mx-auto mb-20">
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/10 text-primary-300 border border-white/10 mb-6"
+          >
             Why Choose Us
-          </span>
-          <h2 className="font-display text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Committed to Your Health &amp; Comfort
-          </h2>
-          <p className="text-xl text-gray-600">
-            We go beyond providing equipment — we deliver care, support, and peace of mind to every customer
-          </p>
-        </motion.div>
+          </motion.span>
 
-        {/* Features grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              className="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 group border border-gray-100"
-            >
-              <div className={`w-14 h-14 ${feature.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                <feature.icon className="h-7 w-7" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {feature.description}
-              </p>
-            </motion.div>
-          ))}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.1 }}
+            className="font-display text-4xl md:text-5xl tracking-tight text-white"
+          >
+            Committed to Your{' '}
+            <span className="text-primary-400">Health</span> &{' '}
+            <span className="text-accent-400">Comfort</span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.2 }}
+            className="mt-5 text-secondary-300 text-lg"
+          >
+            We go beyond supplying equipment — we deliver peace of mind.
+          </motion.p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {features.map((feature, i) => {
+            const Icon = feature.icon
+            return (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+                className="group relative rounded-2xl bg-white/[0.04] border border-white/[0.06] p-7 hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-500"
+              >
+                <div className="flex items-start justify-between mb-5">
+                  <div
+                    className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                      feature.color === 'primary'
+                        ? 'bg-primary-500/15 text-primary-400'
+                        : 'bg-accent-500/15 text-accent-400'
+                    }`}
+                  >
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <div className="text-right">
+                    <span className={`text-2xl font-bold ${
+                      feature.color === 'primary' ? 'text-primary-400' : 'text-accent-400'
+                    }`}>
+                      {feature.stat}
+                    </span>
+                    <p className="text-xs text-secondary-500">{feature.statLabel}</p>
+                  </div>
+                </div>
+
+                <h3 className="text-lg font-bold text-white mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-secondary-400 leading-relaxed">
+                  {feature.description}
+                </p>
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>
