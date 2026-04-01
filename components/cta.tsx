@@ -32,21 +32,21 @@ export function CTA() {
           {/* Hours overlay at bottom */}
           <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm p-8">
             <div className="flex items-start gap-5">
-              <div className="w-12 h-12 rounded-xl bg-primary-50 flex items-center justify-center shrink-0">
-                <Clock className="w-6 h-6 text-primary-600" />
+              <div className="w-12 h-12 rounded-xl bg-accent-50 flex items-center justify-center shrink-0">
+                <Clock className="w-6 h-6 text-accent-600" />
               </div>
               <div className="flex-1 space-y-0">
                 <div className="hours-row">
-                  <span className="text-secondary-600">Mon - Fri</span>
-                  <span className="font-semibold text-secondary-900">9:00 - 18:00</span>
+                  <span className="text-secondary-600 font-medium">Mon - Fri</span>
+                  <span className="font-bold text-secondary-900">9:00 - 18:00</span>
                 </div>
                 <div className="hours-row">
-                  <span className="text-secondary-600">Saturday</span>
-                  <span className="font-semibold text-secondary-900">10:00 - 16:00</span>
+                  <span className="text-secondary-600 font-medium">Saturday</span>
+                  <span className="font-bold text-secondary-900">10:00 - 16:00</span>
                 </div>
                 <div className="hours-row">
-                  <span className="text-secondary-600">Emergency</span>
-                  <span className="font-semibold text-accent-600">24/7 Available</span>
+                  <span className="text-secondary-600 font-medium">Emergency</span>
+                  <span className="font-bold text-accent-600">24/7 Available</span>
                 </div>
               </div>
             </div>
@@ -62,8 +62,9 @@ export function CTA() {
         >
           <span className="section-tag mb-3">Get in Touch</span>
           <h2 className="font-display text-3xl md:text-4xl text-secondary-900 tracking-tight mt-2">
-            Book <span className="text-primary-600 italic">Consultation</span>
+            Book a <span className="text-accent-600 italic">Consultation</span>
           </h2>
+          <div className="line-accent mt-4" />
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-4">
             <div className="grid sm:grid-cols-2 gap-4">
@@ -82,7 +83,7 @@ export function CTA() {
               </select>
             </div>
             <textarea name="message" value={form.message} onChange={handleChange} rows={4} placeholder="Type Your Message" className="form-input-mednix resize-none" required />
-            <button type="submit" className="pill-btn">
+            <button type="submit" className="pill-btn-accent">
               Book Consultation
               <Send className="w-4 h-4" />
             </button>

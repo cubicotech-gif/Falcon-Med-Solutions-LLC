@@ -32,8 +32,9 @@ export function WhyChooseUs() {
             <span className="section-tag mb-4">About Us</span>
             <h2 className="font-display text-4xl md:text-5xl text-secondary-900 tracking-tight leading-[1.1] mt-3">
               A Trusted Partner in{' '}
-              <span className="text-primary-600 italic">Medical Equipment</span>
+              <span className="text-accent-600 italic">Medical Equipment</span>
             </h2>
+            <div className="line-accent mt-5" />
 
             <p className="mt-6 text-secondary-500 leading-relaxed drop-cap">
               We are a dedicated team of medical equipment specialists with over 15 years
@@ -47,12 +48,14 @@ export function WhyChooseUs() {
                 'Expert Consultation & Fitting',
                 'FDA-Certified Equipment',
                 'Insurance & Billing Support',
-              ].map((item) => (
+              ].map((item, i) => (
                 <div key={item} className="flex items-center gap-2.5">
-                  <div className="w-5 h-5 rounded-full bg-primary-500 flex items-center justify-center shrink-0">
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${
+                    i % 2 === 0 ? 'bg-accent-500' : 'bg-primary-500'
+                  }`}>
                     <Check className="w-3 h-3 text-white" />
                   </div>
-                  <span className="text-sm font-medium text-secondary-700">{item}</span>
+                  <span className="text-sm font-semibold text-secondary-700">{item}</span>
                 </div>
               ))}
             </div>
@@ -71,8 +74,14 @@ export function WhyChooseUs() {
             </div>
 
             {/* Overlapping smaller image */}
-            <div className="absolute -bottom-6 -right-4 lg:-right-8 w-40 h-48 lg:w-48 lg:h-56 rounded-2xl overflow-hidden border-4 border-white shadow-xl">
+            <div className="absolute -bottom-6 -right-4 lg:-right-8 w-44 h-52 lg:w-52 lg:h-60 rounded-2xl overflow-hidden border-4 border-white shadow-xl">
               <Image src={secondaryImg} alt="Patient care" fill className="object-cover" />
+            </div>
+
+            {/* Experience badge */}
+            <div className="absolute -top-4 -left-4 bg-accent-600 text-white rounded-2xl px-5 py-4 shadow-lg">
+              <p className="font-display text-3xl font-bold leading-none">15+</p>
+              <p className="text-[10px] uppercase tracking-wider mt-1 text-accent-100">Years</p>
             </div>
           </motion.div>
         </div>

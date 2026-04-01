@@ -33,12 +33,13 @@ export default function ContactPage() {
           backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)',
           backgroundSize: '80px 80px',
         }} />
+        <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-accent-600 via-primary-600 to-accent-600" />
         <div className="relative max-w-7xl mx-auto px-6">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="section-tag text-primary-300 mb-4">Contact Us</span>
             <h1 className="font-display text-white tracking-tight leading-[1.05] mt-3" style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}>
               Let&apos;s Start a<br />
-              <span className="italic text-primary-300">Conversation</span>
+              <span className="italic text-accent-400">Conversation</span>
             </h1>
             <p className="mt-6 text-secondary-400 text-lg max-w-lg leading-relaxed">
               Have a question or need a consultation? We&apos;re here to help
@@ -47,33 +48,38 @@ export default function ContactPage() {
             <div className="breadcrumb-pill mt-6">
               <Link href="/" className="text-secondary-500 hover:text-primary-600 transition-colors">Home</Link>
               <ArrowRight className="w-3 h-3 text-secondary-300" />
-              <span className="text-secondary-800 font-medium">Contact</span>
+              <span className="text-secondary-800 font-semibold">Contact</span>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Contact info cards */}
-      <section className="bg-white border-b border-gray-100">
+      <section className="bg-white">
         <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6 -mt-8 relative z-10">
           {[
-            { icon: Phone, label: 'Phone', value: '(908) 428-6253', sub: 'Mon-Fri 9AM-6PM', href: 'tel:+19084286253' },
-            { icon: Mail, label: 'Email', value: 'info@falconmedsolutions.com', sub: 'Reply within 24h', href: 'mailto:info@falconmedsolutions.com' },
-            { icon: MapPin, label: 'Address', value: '1811 Lincoln Hwy', sub: 'Edison, NJ 08817', href: '#map' },
-            { icon: Clock, label: 'Hours', value: 'Mon-Fri: 9AM-6PM', sub: 'Sat: 10AM-4PM', href: undefined },
+            { icon: Phone, label: 'Phone', value: '(908) 428-6253', sub: 'Mon-Fri 9AM-6PM', href: 'tel:+19084286253', color: 'accent' as const },
+            { icon: Mail, label: 'Email', value: 'info@falconmedsolutions.com', sub: 'Reply within 24h', href: 'mailto:info@falconmedsolutions.com', color: 'primary' as const },
+            { icon: MapPin, label: 'Address', value: '1811 Lincoln Hwy', sub: 'Edison, NJ 08817', href: '#map', color: 'accent' as const },
+            { icon: Clock, label: 'Hours', value: 'Mon-Fri: 9AM-6PM', sub: 'Sat: 10AM-4PM', href: undefined, color: 'primary' as const },
           ].map((info) => {
             const Icon = info.icon
             const Tag = info.href ? 'a' : 'div'
+            const isRed = info.color === 'accent'
             return (
               <Tag
                 key={info.label}
                 {...(info.href ? { href: info.href } : {})}
                 className="showcase-card p-6 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary-50 flex items-center justify-center mb-4">
-                  <Icon className="w-5 h-5 text-primary-600" />
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
+                  isRed ? 'bg-accent-50' : 'bg-primary-50'
+                }`}>
+                  <Icon className={`w-5 h-5 ${isRed ? 'text-accent-600' : 'text-primary-600'}`} />
                 </div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-primary-600 mb-1">{info.label}</p>
+                <p className={`text-xs font-bold uppercase tracking-wider mb-1 ${
+                  isRed ? 'text-accent-600' : 'text-primary-600'
+                }`}>{info.label}</p>
                 <p className="text-sm font-bold text-secondary-900 group-hover:text-primary-600 transition-colors">
                   {info.value}
                 </p>
@@ -88,13 +94,13 @@ export default function ContactPage() {
       <section className="py-20 lg:py-28 bg-tint">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-5 gap-12">
-            {/* Form */}
             <Reveal className="lg:col-span-3">
               <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm">
                 <span className="section-tag mb-3">Send a Message</span>
                 <h2 className="font-display text-3xl md:text-4xl text-secondary-900 tracking-tight mt-2">
-                  How Can We <span className="text-primary-600 italic">Help?</span>
+                  How Can We <span className="text-accent-600 italic">Help?</span>
                 </h2>
+                <div className="line-accent mt-4" />
 
                 <form onSubmit={handleSubmit} className="mt-8 space-y-5">
                   <div className="grid sm:grid-cols-2 gap-5">
@@ -114,7 +120,7 @@ export default function ContactPage() {
                     <option value="other">Other</option>
                   </select>
                   <textarea name="message" value={form.message} onChange={handleChange} rows={4} placeholder="Tell us how we can help..." className="form-input-mednix resize-none" required />
-                  <button type="submit" className="pill-btn">
+                  <button type="submit" className="pill-btn-accent">
                     Send Message
                     <Send className="w-4 h-4" />
                   </button>
@@ -122,7 +128,6 @@ export default function ContactPage() {
               </div>
             </Reveal>
 
-            {/* Map */}
             <Reveal className="lg:col-span-2" delay={0.15}>
               <div className="bg-white rounded-2xl overflow-hidden shadow-sm h-full min-h-[450px]" id="map">
                 <iframe
