@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Menu, X, Phone, MapPin, Mail, Clock, ArrowRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname } from 'next/navigation'
+import { useSiteImage } from '@/hooks/use-site-image'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -18,6 +19,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
+  const logo = useSiteImage('site-logo', '/logo.svg')
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 10)
@@ -68,7 +70,7 @@ export function Navbar() {
           <div className="flex items-center gap-5">
             <Link href="/" className="flex items-center gap-2.5">
               <div className="relative w-10 h-10">
-                <Image src="/logo.svg" alt="FalconMed" fill className="object-contain" />
+                <Image src={logo} alt="FalconMed" fill className="object-contain" />
               </div>
               <span className="font-display text-xl text-secondary-900">
                 Falcon<span className="text-accent-600">Med</span>

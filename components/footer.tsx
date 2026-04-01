@@ -1,8 +1,12 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { Phone, Mail, MapPin, Clock, Facebook, Twitter, Linkedin, ArrowRight } from 'lucide-react'
+import { useSiteImage } from '@/hooks/use-site-image'
 
 export function Footer() {
+  const logo = useSiteImage('site-logo', '/logo.svg')
   return (
     <footer className="bg-secondary-900 text-white">
       {/* Main footer */}
@@ -12,7 +16,7 @@ export function Footer() {
           <div>
             <Link href="/" className="flex items-center gap-2.5 mb-5">
               <div className="relative w-10 h-10">
-                <Image src="/logo.svg" alt="FalconMed" fill className="object-contain" />
+                <Image src={logo} alt="FalconMed" fill className="object-contain" />
               </div>
               <span className="font-display text-xl text-white">
                 Falcon<span className="text-accent-400">Med</span>

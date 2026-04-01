@@ -7,7 +7,6 @@ type ImageMap = Record<string, string>
 // Shared in-memory cache across all hook instances
 const imageCache: ImageMap = {}
 let fetchPromise: Promise<ImageMap> | null = null
-let fetched = false
 
 async function fetchAllImages(): Promise<ImageMap> {
   try {
@@ -23,7 +22,6 @@ async function fetchAllImages(): Promise<ImageMap> {
         imageCache[row.slot_key] = row.image_url
       }
     }
-    fetched = true
     return map
   } catch {
     return {}
@@ -37,15 +35,22 @@ function ensureFetch(): Promise<ImageMap> {
   return fetchPromise
 }
 
+/**
+ * Returns the image URL for a given slot key.
+ * Starts with defaultUrl, swaps to DB value once loaded.
+ * Once cached, returns DB value immediately (no flash on subsequent renders).
+ */
 export function useSiteImage(slotKey: string, defaultUrl: string): string {
   const [imageUrl, setImageUrl] = useState(imageCache[slotKey] || defaultUrl)
 
   useEffect(() => {
+    // Already have the cached DB value — use it
     if (imageCache[slotKey]) {
       setImageUrl(imageCache[slotKey])
       return
     }
 
+    // Fetch from API (single shared request for all hooks)
     ensureFetch().then((all) => {
       if (all[slotKey]) {
         setImageUrl(all[slotKey])
@@ -59,12 +64,12 @@ export function useSiteImage(slotKey: string, defaultUrl: string): string {
 export function useSiteImages(
   slots: { key: string; defaultUrl: string }[]
 ): ImageMap {
-  const defaults: ImageMap = {}
+  const initial: ImageMap = {}
   for (const slot of slots) {
-    defaults[slot.key] = imageCache[slot.key] || slot.defaultUrl
+    initial[slot.key] = imageCache[slot.key] || slot.defaultUrl
   }
 
-  const [images, setImages] = useState<ImageMap>(defaults)
+  const [images, setImages] = useState<ImageMap>(initial)
 
   useEffect(() => {
     const allCached = slots.every((s) => imageCache[s.key])
