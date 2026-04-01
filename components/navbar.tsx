@@ -35,7 +35,7 @@ export function Navbar() {
   return (
     <>
       {/* Top info strip */}
-      <div className="bg-secondary-900 text-white text-xs hidden lg:block">
+      <div className="bg-primary-900 text-white text-xs hidden lg:block">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between py-2">
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-1.5">
@@ -65,10 +65,14 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-4">
             <div className="relative w-16 h-16 md:w-20 md:h-20">
-              <Image src={logo} alt="FalconMed Solutions" fill className="object-contain" />
+              {logo ? (
+                <Image src={logo} alt="FalconMed Solutions" fill className="object-contain" />
+              ) : (
+                <div className="w-full h-full rounded-xl bg-primary-100 animate-pulse" />
+              )}
             </div>
             <div>
-              <h1 className="font-display text-2xl md:text-3xl font-bold text-secondary-900 leading-none">
+              <h1 className="font-display text-2xl md:text-3xl font-bold text-primary-900 leading-none">
                 Falcon<span className="text-accent-600">Med</span>
               </h1>
               <p className="text-[11px] md:text-xs text-secondary-400 font-medium uppercase tracking-widest mt-0.5">
@@ -83,7 +87,7 @@ export function Navbar() {
               </div>
               <div>
                 <p className="text-[10px] text-secondary-400 uppercase tracking-wider font-semibold">Call Us Now</p>
-                <a href="tel:+19084286253" className="text-base font-bold text-secondary-900 hover:text-accent-600 transition-colors">
+                <a href="tel:+19084286253" className="text-base font-bold text-primary-800 hover:text-accent-600 transition-colors">
                   (908) 428-6253
                 </a>
               </div>
@@ -95,14 +99,14 @@ export function Navbar() {
               </div>
               <div>
                 <p className="text-[10px] text-secondary-400 uppercase tracking-wider font-semibold">Email Us</p>
-                <a href="mailto:info@falconmedsolutions.com" className="text-sm font-bold text-secondary-900 hover:text-primary-600 transition-colors">
+                <a href="mailto:info@falconmedsolutions.com" className="text-sm font-bold text-primary-800 hover:text-primary-600 transition-colors">
                   info@falconmedsolutions.com
                 </a>
               </div>
             </div>
           </div>
           {/* Mobile toggle */}
-          <button onClick={() => setOpen(!open)} className="lg:hidden w-12 h-12 rounded-xl bg-secondary-900 text-white flex items-center justify-center" aria-label="Menu">
+          <button onClick={() => setOpen(!open)} className="lg:hidden w-12 h-12 rounded-xl bg-primary-800 text-white flex items-center justify-center" aria-label="Menu">
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
@@ -119,9 +123,9 @@ export function Navbar() {
             {/* Collapsed logo — only visible when scrolled */}
             <Link href="/" className={`flex items-center gap-2.5 transition-all duration-300 ${scrolled ? 'opacity-100' : 'opacity-0 w-0 overflow-hidden'}`}>
               <div className="relative w-9 h-9 shrink-0">
-                <Image src={logo} alt="FalconMed" fill className="object-contain" />
+                {logo && <Image src={logo} alt="FalconMed" fill className="object-contain" />}
               </div>
-              <span className="font-display text-lg font-bold text-secondary-900 whitespace-nowrap">
+              <span className="font-display text-lg font-bold text-primary-900 whitespace-nowrap">
                 Falcon<span className="text-accent-600">Med</span>
               </span>
             </Link>
@@ -138,7 +142,7 @@ export function Navbar() {
                       scrolled
                         ? isActive
                           ? 'bg-primary-600 text-white'
-                          : 'text-secondary-600 hover:text-primary-600 hover:bg-primary-50'
+                          : 'text-primary-800 hover:text-primary-600 hover:bg-primary-50'
                         : isActive
                           ? 'bg-white text-primary-700'
                           : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -164,7 +168,7 @@ export function Navbar() {
 
             {/* Mobile toggle for scrolled state */}
             {scrolled && (
-              <button onClick={() => setOpen(!open)} className="lg:hidden w-10 h-10 rounded-xl bg-secondary-900 text-white flex items-center justify-center" aria-label="Menu">
+              <button onClick={() => setOpen(!open)} className="lg:hidden w-10 h-10 rounded-xl bg-primary-800 text-white flex items-center justify-center" aria-label="Menu">
                 {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             )}
@@ -186,9 +190,9 @@ export function Navbar() {
               <div className="flex items-center justify-between mb-8">
                 <Link href="/" onClick={() => setOpen(false)} className="flex items-center gap-3">
                   <div className="relative w-12 h-12">
-                    <Image src={logo} alt="FalconMed" fill className="object-contain" />
+                    {logo && <Image src={logo} alt="FalconMed" fill className="object-contain" />}
                   </div>
-                  <span className="font-display text-xl font-bold text-secondary-900">
+                  <span className="font-display text-xl font-bold text-primary-900">
                     Falcon<span className="text-accent-600">Med</span>
                   </span>
                 </Link>
@@ -208,7 +212,7 @@ export function Navbar() {
                       className={`block py-4 px-5 text-lg font-semibold rounded-xl transition-colors ${
                         isActive
                           ? 'bg-primary-50 text-primary-600'
-                          : 'text-secondary-800 hover:bg-gray-50'
+                          : 'text-primary-800 hover:bg-gray-50'
                       }`}
                     >
                       {link.label}
@@ -226,7 +230,7 @@ export function Navbar() {
                   Get a Quote
                   <ArrowRight className="w-4 h-4" />
                 </Link>
-                <a href="tel:+19084286253" className="flex items-center justify-center gap-3 py-3 text-secondary-600 font-semibold">
+                <a href="tel:+19084286253" className="flex items-center justify-center gap-3 py-3 text-primary-700 font-semibold">
                   <Phone className="w-5 h-5 text-accent-600" />
                   (908) 428-6253
                 </a>

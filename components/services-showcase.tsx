@@ -17,7 +17,7 @@ const items = [
 export function ServicesShowcase() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
-  const images = useSiteImages(items.map((i) => ({ key: i.imageKey, defaultUrl: i.defaultImage })))
+  const { images, ready } = useSiteImages(items.map((i) => ({ key: i.imageKey, defaultUrl: i.defaultImage })))
 
   return (
     <section ref={ref} className="py-24 lg:py-32">
@@ -29,7 +29,7 @@ export function ServicesShowcase() {
           className="text-center max-w-2xl mx-auto mb-16"
         >
           <span className="section-tag justify-center mb-3">Our Products</span>
-          <h2 className="font-display text-4xl md:text-5xl text-secondary-900 tracking-tight leading-[1.1] mt-3">
+          <h2 className="font-display text-4xl md:text-5xl text-primary-900 tracking-tight leading-[1.1] mt-3">
             Quality Medical Equipment to{' '}
             <span className="text-primary-600 italic">Empower You</span>
           </h2>
@@ -41,6 +41,7 @@ export function ServicesShowcase() {
           {items.map((item, i) => {
             const Icon = item.icon
             const isRed = item.badgeColor === 'red'
+            const imgSrc = ready ? images[item.imageKey] : ''
             return (
               <motion.div
                 key={item.title}
@@ -50,13 +51,15 @@ export function ServicesShowcase() {
               >
                 <Link href="/products" className="showcase-card block group">
                   {/* Image with floating icon */}
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <Image
-                      src={images[item.imageKey] || item.defaultImage}
-                      alt={item.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+                  <div className="relative aspect-[4/3] overflow-hidden bg-primary-100">
+                    {imgSrc && (
+                      <Image
+                        src={imgSrc}
+                        alt={item.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    )}
                     {/* Floating icon badge */}
                     <div className={`absolute bottom-4 left-4 ${isRed ? 'icon-badge-red' : 'icon-badge'}`}>
                       <Icon className="w-6 h-6" />
@@ -65,7 +68,7 @@ export function ServicesShowcase() {
 
                   {/* Content */}
                   <div className="p-5">
-                    <h3 className="font-display text-xl text-secondary-900 group-hover:text-primary-600 transition-colors">
+                    <h3 className="font-display text-xl text-primary-900 group-hover:text-primary-600 transition-colors">
                       {item.title}
                     </h3>
                     <p className="text-sm text-secondary-500 mt-2 leading-relaxed">

@@ -32,21 +32,19 @@ const values = [
 ]
 
 export default function AboutPage() {
-  const storyImg = useSiteImage(
-    'about-story',
-    'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80'
-  )
-  const heroImg = useSiteImage(
-    'about-hero',
-    'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1400&q=80'
-  )
+  const storyImg = useSiteImage('about-story', '')
+  const heroImg = useSiteImage('about-hero', '')
 
   return (
     <>
       {/* Hero */}
       <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
-        <Image src={heroImg} alt="Medical professionals" fill className="object-cover" priority />
-        <div className="absolute inset-0 bg-secondary-900/80" />
+        {heroImg ? (
+          <Image src={heroImg} alt="Medical professionals" fill className="object-cover" priority />
+        ) : (
+          <div className="w-full h-full bg-primary-800" />
+        )}
+        <div className="absolute inset-0 bg-primary-900/80" />
         <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-accent-600 via-primary-600 to-accent-600" />
         <div className="relative z-10 h-full flex flex-col justify-end max-w-7xl mx-auto px-6 pb-16">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
@@ -58,7 +56,7 @@ export default function AboutPage() {
             <div className="breadcrumb-pill mt-6">
               <Link href="/" className="text-secondary-500 hover:text-primary-600 transition-colors">Home</Link>
               <ArrowRight className="w-3 h-3 text-secondary-300" />
-              <span className="text-secondary-800 font-semibold">About</span>
+              <span className="text-primary-800 font-semibold">About</span>
             </div>
           </motion.div>
         </div>
@@ -70,8 +68,8 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
             <Reveal>
               <div className="relative">
-                <div className="relative rounded-2xl overflow-hidden aspect-[4/5] shadow-xl">
-                  <Image src={storyImg} alt="Our team" fill className="object-cover" />
+                <div className="relative rounded-2xl overflow-hidden aspect-[4/5] shadow-xl bg-primary-100">
+                  {storyImg && <Image src={storyImg} alt="Our team" fill className="object-cover" />}
                 </div>
                 <div className="absolute -bottom-6 -right-4 lg:-right-8 bg-accent-600 rounded-2xl px-8 py-6 shadow-xl">
                   <p className="font-display text-5xl md:text-6xl text-white leading-none font-bold">15+</p>
@@ -82,7 +80,7 @@ export default function AboutPage() {
 
             <Reveal delay={0.15}>
               <span className="section-tag mb-4">Our Story</span>
-              <h2 className="font-display text-4xl md:text-5xl text-secondary-900 tracking-tight leading-[1.1] mt-3">
+              <h2 className="font-display text-4xl md:text-5xl text-primary-900 tracking-tight leading-[1.1] mt-3">
                 From a Small Supplier to a{' '}
                 <span className="text-accent-600 italic">Trusted Name</span>
               </h2>
@@ -117,7 +115,7 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="py-24 lg:py-32 bg-secondary-900">
+      <section className="py-24 lg:py-32 bg-primary-900">
         <div className="max-w-7xl mx-auto px-6">
           <Reveal>
             <span className="section-tag text-primary-300 mb-4">Our Journey</span>
@@ -130,7 +128,7 @@ export default function AboutPage() {
           <div className="mt-16 grid md:grid-cols-4 gap-6">
             {milestones.map((m, i) => (
               <Reveal key={m.year} delay={i * 0.1}>
-                <div className={`service-card ${i % 2 === 0 ? 'filled-dark' : 'filled-accent'} min-h-[220px] flex flex-col justify-between`}>
+                <div className={`service-card ${i % 2 === 0 ? 'filled-blue' : 'filled-accent'} min-h-[220px] flex flex-col justify-between`}>
                   <div>
                     <span className="font-display text-5xl text-white/10 block mb-3 font-bold">{m.year}</span>
                     <h3 className="text-lg font-bold text-white mb-2">{m.title}</h3>
@@ -151,7 +149,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-6">
           <Reveal className="text-center max-w-2xl mx-auto mb-16">
             <span className="section-tag justify-center mb-3">Our Values</span>
-            <h2 className="font-display text-4xl md:text-5xl text-secondary-900 tracking-tight leading-[1.1] mt-3">
+            <h2 className="font-display text-4xl md:text-5xl text-primary-900 tracking-tight leading-[1.1] mt-3">
               What Drives Everything{' '}
               <span className="text-primary-600 italic">We Do</span>
             </h2>
@@ -170,7 +168,7 @@ export default function AboutPage() {
                     }`}>
                       <Icon className={`w-7 h-7 ${isRed ? 'text-accent-600' : 'text-primary-600'}`} />
                     </div>
-                    <h3 className="font-display text-xl text-secondary-900 mb-2">{v.title}</h3>
+                    <h3 className="font-display text-xl text-primary-900 mb-2">{v.title}</h3>
                     <p className="text-sm text-secondary-500 leading-relaxed">{v.text}</p>
                   </div>
                 </Reveal>
@@ -202,7 +200,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-6 text-center">
           <Reveal>
             <span className="section-tag justify-center mb-3">Get Started</span>
-            <h2 className="font-display text-4xl md:text-5xl text-secondary-900 tracking-tight mt-3">
+            <h2 className="font-display text-4xl md:text-5xl text-primary-900 tracking-tight mt-3">
               Let&apos;s Work <span className="text-accent-600 italic">Together</span>
             </h2>
             <div className="line-accent mx-auto mt-5" />
@@ -214,7 +212,7 @@ export default function AboutPage() {
                 Get in Touch
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link href="/products" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border-2 border-secondary-200 text-sm font-bold uppercase tracking-wider text-secondary-700 hover:border-primary-600 hover:text-primary-600 transition-all">
+              <Link href="/products" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border-2 border-primary-200 text-sm font-bold uppercase tracking-wider text-primary-700 hover:border-primary-600 hover:text-primary-600 transition-all">
                 View Products
               </Link>
             </div>

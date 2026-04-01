@@ -16,8 +16,12 @@ export function Hero() {
     <section className="relative min-h-[90vh] flex items-center overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0">
-        <Image src={heroImg} alt="Medical care" fill className="object-cover" priority />
-        <div className="absolute inset-0 bg-gradient-to-r from-secondary-900/90 via-secondary-900/60 to-transparent" />
+        {heroImg ? (
+          <Image src={heroImg} alt="Medical care" fill className="object-cover" priority />
+        ) : (
+          <div className="w-full h-full bg-primary-800" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-950/90 via-primary-900/60 to-transparent" />
       </div>
 
       {/* Red accent stripe at bottom */}

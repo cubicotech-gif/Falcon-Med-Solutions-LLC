@@ -30,7 +30,7 @@ export function WhyChooseUs() {
             transition={{ duration: 0.6 }}
           >
             <span className="section-tag mb-4">About Us</span>
-            <h2 className="font-display text-4xl md:text-5xl text-secondary-900 tracking-tight leading-[1.1] mt-3">
+            <h2 className="font-display text-4xl md:text-5xl text-primary-900 tracking-tight leading-[1.1] mt-3">
               A Trusted Partner in{' '}
               <span className="text-accent-600 italic">Medical Equipment</span>
             </h2>
@@ -69,13 +69,13 @@ export function WhyChooseUs() {
             className="relative"
           >
             {/* Main image */}
-            <div className="relative rounded-2xl overflow-hidden aspect-[4/5] shadow-xl">
-              <Image src={mainImg} alt="Medical equipment specialist" fill className="object-cover" />
+            <div className="relative rounded-2xl overflow-hidden aspect-[4/5] shadow-xl bg-primary-100">
+              {mainImg && <Image src={mainImg} alt="Medical equipment specialist" fill className="object-cover" />}
             </div>
 
             {/* Overlapping smaller image */}
-            <div className="absolute -bottom-6 -right-4 lg:-right-8 w-44 h-52 lg:w-52 lg:h-60 rounded-2xl overflow-hidden border-4 border-white shadow-xl">
-              <Image src={secondaryImg} alt="Patient care" fill className="object-cover" />
+            <div className="absolute -bottom-6 -right-4 lg:-right-8 w-44 h-52 lg:w-52 lg:h-60 rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-primary-100">
+              {secondaryImg && <Image src={secondaryImg} alt="Patient care" fill className="object-cover" />}
             </div>
 
             {/* Experience badge */}
