@@ -1,28 +1,40 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabase'
 
-type SiteImageRow = { slot_key: string; image_url: string }
+type ImageMap = Record<string, string>
 
-// In-memory cache shared across all hook instances
-const imageCache: Record<string, string> = {}
-const pendingRequests: Record<string, Promise<string | null>> = {}
+// Shared in-memory cache across all hook instances
+const imageCache: ImageMap = {}
+let fetchPromise: Promise<ImageMap> | null = null
+let fetched = false
 
-async function fetchSingleImage(slotKey: string): Promise<string | null> {
+async function fetchAllImages(): Promise<ImageMap> {
   try {
-    const { data } = await supabase
-      .from('site_images')
-      .select('image_url')
-      .eq('slot_key', slotKey)
-      .single()
-    const row = data as SiteImageRow | null
-    return row?.image_url || null
+    const res = await fetch('/api/site-images')
+    if (!res.ok) return {}
+    const data = await res.json()
+    if (!Array.isArray(data)) return {}
+
+    const map: ImageMap = {}
+    for (const row of data) {
+      if (row.slot_key && row.image_url) {
+        map[row.slot_key] = row.image_url
+        imageCache[row.slot_key] = row.image_url
+      }
+    }
+    fetched = true
+    return map
   } catch {
-    return null
-  } finally {
-    delete pendingRequests[slotKey]
+    return {}
   }
+}
+
+function ensureFetch(): Promise<ImageMap> {
+  if (!fetchPromise) {
+    fetchPromise = fetchAllImages()
+  }
+  return fetchPromise
 }
 
 export function useSiteImage(slotKey: string, defaultUrl: string): string {
@@ -34,14 +46,9 @@ export function useSiteImage(slotKey: string, defaultUrl: string): string {
       return
     }
 
-    if (!pendingRequests[slotKey]) {
-      pendingRequests[slotKey] = fetchSingleImage(slotKey)
-    }
-
-    pendingRequests[slotKey].then((url) => {
-      if (url) {
-        imageCache[slotKey] = url
-        setImageUrl(url)
+    ensureFetch().then((all) => {
+      if (all[slotKey]) {
+        setImageUrl(all[slotKey])
       }
     })
   }, [slotKey, defaultUrl])
@@ -49,43 +56,20 @@ export function useSiteImage(slotKey: string, defaultUrl: string): string {
   return imageUrl
 }
 
-// Batch fetch all site images at once
-const allImagesFetched = { done: false }
-let allImagesPromise: Promise<Record<string, string>> | null = null
-
-async function fetchAllImages(): Promise<Record<string, string>> {
-  try {
-    const { data } = await supabase
-      .from('site_images')
-      .select('slot_key, image_url')
-    const map: Record<string, string> = {}
-    if (data) {
-      for (const item of data as SiteImageRow[]) {
-        map[item.slot_key] = item.image_url
-        imageCache[item.slot_key] = item.image_url
-      }
-    }
-    allImagesFetched.done = true
-    return map
-  } catch {
-    return {}
-  }
-}
-
 export function useSiteImages(
   slots: { key: string; defaultUrl: string }[]
-): Record<string, string> {
-  const defaults: Record<string, string> = {}
+): ImageMap {
+  const defaults: ImageMap = {}
   for (const slot of slots) {
     defaults[slot.key] = imageCache[slot.key] || slot.defaultUrl
   }
 
-  const [images, setImages] = useState<Record<string, string>>(defaults)
+  const [images, setImages] = useState<ImageMap>(defaults)
 
   useEffect(() => {
     const allCached = slots.every((s) => imageCache[s.key])
     if (allCached) {
-      const cached: Record<string, string> = {}
+      const cached: ImageMap = {}
       for (const slot of slots) {
         cached[slot.key] = imageCache[slot.key]
       }
@@ -93,14 +77,10 @@ export function useSiteImages(
       return
     }
 
-    if (!allImagesPromise || !allImagesFetched.done) {
-      allImagesPromise = fetchAllImages()
-    }
-
-    allImagesPromise.then((allImages) => {
-      const result: Record<string, string> = {}
+    ensureFetch().then((all) => {
+      const result: ImageMap = {}
       for (const slot of slots) {
-        result[slot.key] = allImages[slot.key] || slot.defaultUrl
+        result[slot.key] = all[slot.key] || slot.defaultUrl
       }
       setImages(result)
     })
