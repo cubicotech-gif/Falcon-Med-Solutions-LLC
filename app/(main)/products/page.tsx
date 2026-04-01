@@ -21,6 +21,7 @@ const categories = [
   {
     name: 'Wheelchairs',
     icon: Armchair,
+    color: 'primary' as const,
     desc: 'Premium wheelchairs designed for comfort, mobility, and independence.',
     products: [
       { name: 'Standard Wheelchair', desc: 'Durable, lightweight wheelchair with adjustable footrests and armrests for daily use.', features: ['Lightweight aluminum frame', 'Adjustable footrests', 'Foldable design', 'Padded armrests'], imageKey: 'product-wheelchair-standard', defaultImage: 'https://images.unsplash.com/photo-1619204715997-1e8ed26753b0?w=600&q=80' },
@@ -30,6 +31,7 @@ const categories = [
   {
     name: 'Mobility Aids',
     icon: Footprints,
+    color: 'accent' as const,
     desc: 'Professional-grade support equipment for confident, safe movement.',
     products: [
       { name: 'Rollator Walker', desc: 'Four-wheel rollator with built-in seat, basket, and ergonomic hand brakes.', features: ['Built-in seat', 'Storage basket', 'Hand brakes', 'Height adjustable'], imageKey: 'product-rollator', defaultImage: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80' },
@@ -39,6 +41,7 @@ const categories = [
   {
     name: 'Diabetic Care',
     icon: Activity,
+    color: 'primary' as const,
     desc: 'Comprehensive diabetes management equipment and monitoring supplies.',
     products: [
       { name: 'Blood Glucose Monitor', desc: 'Accurate, easy-to-use monitoring system with digital display.', features: ['Fast results', 'Large display', 'Memory storage', 'Auto-coding'], imageKey: 'product-glucose', defaultImage: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=600&q=80' },
@@ -48,6 +51,7 @@ const categories = [
   {
     name: 'Orthopedic Braces',
     icon: Bone,
+    color: 'accent' as const,
     desc: 'Medical-grade braces and supports for recovery and pain management.',
     products: [
       { name: 'Knee Brace', desc: 'Adjustable knee brace with hinged support for stability during recovery.', features: ['Hinged support', 'Adjustable straps', 'Breathable material', 'Comfortable fit'], imageKey: 'product-knee-brace', defaultImage: 'https://images.unsplash.com/photo-1559757175-7cb056fba93d?w=600&q=80' },
@@ -68,12 +72,13 @@ export default function ProductsPage() {
           backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)',
           backgroundSize: '80px 80px',
         }} />
+        <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-accent-600 via-primary-600 to-accent-600" />
         <div className="relative max-w-7xl mx-auto px-6">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="section-tag text-primary-300 mb-4">Our Products</span>
             <h1 className="font-display text-white tracking-tight leading-[1.05] mt-3" style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}>
               Medical Equipment<br />
-              <span className="italic text-primary-300">Catalog</span>
+              <span className="italic text-accent-400">Catalog</span>
             </h1>
             <p className="mt-6 text-secondary-400 text-lg max-w-lg leading-relaxed">
               Browse our comprehensive selection of FDA-certified equipment,
@@ -82,7 +87,7 @@ export default function ProductsPage() {
             <div className="breadcrumb-pill mt-6">
               <Link href="/" className="text-secondary-500 hover:text-primary-600 transition-colors">Home</Link>
               <ArrowRight className="w-3 h-3 text-secondary-300" />
-              <span className="text-secondary-800 font-medium">Products</span>
+              <span className="text-secondary-800 font-semibold">Products</span>
             </div>
           </motion.div>
         </div>
@@ -91,13 +96,13 @@ export default function ProductsPage() {
       {/* Categories */}
       {categories.map((cat, catIdx) => {
         const CatIcon = cat.icon
+        const isRed = cat.color === 'accent'
         return (
           <section key={cat.name} className={`py-20 lg:py-28 ${catIdx % 2 === 1 ? 'bg-tint' : 'bg-white'}`}>
             <div className="max-w-7xl mx-auto px-6">
-              {/* Category header */}
               <Reveal className="mb-14">
                 <div className="flex items-center gap-5">
-                  <div className="icon-badge">
+                  <div className={isRed ? 'icon-badge-red' : 'icon-badge'}>
                     <CatIcon className="w-6 h-6" />
                   </div>
                   <div>
@@ -107,44 +112,45 @@ export default function ProductsPage() {
                     <p className="text-secondary-500 mt-1 max-w-md">{cat.desc}</p>
                   </div>
                 </div>
+                <div className={`w-12 h-1 rounded-full mt-5 ${isRed ? 'bg-accent-600' : 'bg-primary-600'}`} />
               </Reveal>
 
-              {/* Products grid */}
               <div className="grid md:grid-cols-2 gap-8">
                 {cat.products.map((product, pIdx) => (
                   <Reveal key={product.name} delay={pIdx * 0.1}>
                     <div className="showcase-card overflow-hidden">
-                      {/* Image */}
                       <div className="relative aspect-[4/3] overflow-hidden">
                         <Image
                           src={images[product.imageKey] || product.defaultImage}
                           alt={product.name}
                           fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          className="object-cover transition-transform duration-500 hover:scale-105"
                         />
                       </div>
-
-                      {/* Content */}
                       <div className="p-6 md:p-8">
                         <h3 className="font-display text-2xl text-secondary-900 tracking-tight">
                           {product.name}
                         </h3>
-                        <p className="text-secondary-500 leading-relaxed mt-2">
-                          {product.desc}
-                        </p>
+                        <p className="text-secondary-500 leading-relaxed mt-2">{product.desc}</p>
                         <ul className="mt-5 grid grid-cols-2 gap-2.5">
-                          {product.features.map((f) => (
+                          {product.features.map((f, fi) => (
                             <li key={f} className="flex items-center gap-2 text-sm text-secondary-600">
-                              <div className="w-4 h-4 rounded-full bg-primary-500 flex items-center justify-center shrink-0">
+                              <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${
+                                fi % 2 === 0
+                                  ? isRed ? 'bg-accent-500' : 'bg-primary-500'
+                                  : isRed ? 'bg-primary-500' : 'bg-accent-500'
+                              }`}>
                                 <Check className="w-2.5 h-2.5 text-white" />
                               </div>
-                              {f}
+                              <span className="font-medium">{f}</span>
                             </li>
                           ))}
                         </ul>
                         <Link
                           href="/contact"
-                          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors group"
+                          className={`mt-6 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider transition-colors group ${
+                            isRed ? 'text-accent-600 hover:text-accent-700' : 'text-primary-600 hover:text-primary-700'
+                          }`}
                         >
                           Request Quote
                           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
@@ -160,24 +166,25 @@ export default function ProductsPage() {
       })}
 
       {/* Bottom CTA */}
-      <section className="bg-primary-600">
-        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-24">
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-700 to-accent-700" />
+        <div className="relative max-w-7xl mx-auto px-6 py-20 lg:py-24">
           <Reveal>
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-10">
               <div>
                 <h2 className="font-display text-3xl md:text-4xl text-white tracking-tight leading-[1.1]">
                   Can&apos;t Find What You Need?
                 </h2>
-                <p className="mt-3 text-primary-100/70 text-lg max-w-lg">
+                <p className="mt-3 text-white/70 text-lg max-w-lg">
                   We carry a wide range of equipment. Contact us for a personalized recommendation.
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-5 shrink-0">
-                <a href="tel:+19084286253" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white rounded-full text-primary-700 text-sm font-bold hover:bg-gray-50 transition-colors">
-                  <Phone className="w-4 h-4" />
+                <a href="tel:+19084286253" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white rounded-full text-secondary-900 text-sm font-bold uppercase tracking-wider hover:bg-gray-50 transition-colors">
+                  <Phone className="w-4 h-4 text-accent-600" />
                   (908) 428-6253
                 </a>
-                <Link href="/contact" className="pill-btn bg-white/10 border border-white/30 hover:bg-white/20">
+                <Link href="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border-2 border-white/40 text-white text-sm font-bold uppercase tracking-wider hover:bg-white/10 transition-all">
                   Free Consultation
                   <ArrowRight className="w-4 h-4" />
                 </Link>
