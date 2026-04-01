@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Upload, Check, AlertCircle, Loader2, ImageIcon, ExternalLink } from 'lucide-react'
+import { useSiteImage } from '@/hooks/use-site-image'
 
 interface SiteImage {
   id: string
@@ -141,6 +142,7 @@ export default function AdminPage() {
   const [images, setImages] = useState<SiteImage[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const adminLogo = useSiteImage('site-logo', '/logo.svg')
 
   useEffect(() => {
     fetch('/api/site-images')
@@ -197,7 +199,7 @@ export default function AdminPage() {
           <div className="flex items-center gap-3">
             <div className="relative w-10 h-10">
               <Image
-                src="/logo.svg"
+                src={adminLogo}
                 alt="FalconMed Solutions"
                 fill
                 className="object-contain"
