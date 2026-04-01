@@ -25,9 +25,9 @@ export function CTA() {
     <section ref={ref} className="relative">
       <div className="grid lg:grid-cols-2">
         {/* Left - Image + Hours */}
-        <div className="relative min-h-[400px] lg:min-h-0">
-          <Image src={bgImg} alt="Healthcare" fill className="object-cover" />
-          <div className="absolute inset-0 bg-secondary-900/60" />
+        <div className="relative min-h-[400px] lg:min-h-0 bg-primary-800">
+          {bgImg && <Image src={bgImg} alt="Healthcare" fill className="object-cover" />}
+          <div className="absolute inset-0 bg-primary-900/50" />
 
           {/* Hours overlay at bottom */}
           <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm p-8">
@@ -38,11 +38,11 @@ export function CTA() {
               <div className="flex-1 space-y-0">
                 <div className="hours-row">
                   <span className="text-secondary-600 font-medium">Mon - Fri</span>
-                  <span className="font-bold text-secondary-900">9:00 - 18:00</span>
+                  <span className="font-bold text-primary-800">9:00 - 18:00</span>
                 </div>
                 <div className="hours-row">
                   <span className="text-secondary-600 font-medium">Saturday</span>
-                  <span className="font-bold text-secondary-900">10:00 - 16:00</span>
+                  <span className="font-bold text-primary-800">10:00 - 16:00</span>
                 </div>
                 <div className="hours-row">
                   <span className="text-secondary-600 font-medium">Emergency</span>
@@ -61,7 +61,7 @@ export function CTA() {
           className="bg-white p-8 md:p-12 lg:p-14"
         >
           <span className="section-tag mb-3">Get in Touch</span>
-          <h2 className="font-display text-3xl md:text-4xl text-secondary-900 tracking-tight mt-2">
+          <h2 className="font-display text-3xl md:text-4xl text-primary-900 tracking-tight mt-2">
             Book a <span className="text-accent-600 italic">Consultation</span>
           </h2>
           <div className="line-accent mt-4" />

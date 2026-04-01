@@ -62,12 +62,12 @@ const categories = [
 
 export default function ProductsPage() {
   const allSlots = categories.flatMap((c) => c.products.map((p) => ({ key: p.imageKey, defaultUrl: p.defaultImage })))
-  const images = useSiteImages(allSlots)
+  const { images, ready } = useSiteImages(allSlots)
 
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-40 pb-20 lg:pt-48 lg:pb-28 bg-secondary-900 overflow-hidden">
+      <section className="relative pt-40 pb-20 lg:pt-48 lg:pb-28 bg-primary-900 overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]" style={{
           backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)',
           backgroundSize: '80px 80px',
@@ -80,14 +80,14 @@ export default function ProductsPage() {
               Medical Equipment<br />
               <span className="italic text-accent-400">Catalog</span>
             </h1>
-            <p className="mt-6 text-secondary-400 text-lg max-w-lg leading-relaxed">
+            <p className="mt-6 text-primary-200/60 text-lg max-w-lg leading-relaxed">
               Browse our comprehensive selection of FDA-certified equipment,
               backed by expert guidance and quality assurance.
             </p>
             <div className="breadcrumb-pill mt-6">
               <Link href="/" className="text-secondary-500 hover:text-primary-600 transition-colors">Home</Link>
               <ArrowRight className="w-3 h-3 text-secondary-300" />
-              <span className="text-secondary-800 font-semibold">Products</span>
+              <span className="text-primary-800 font-semibold">Products</span>
             </div>
           </motion.div>
         </div>
@@ -106,7 +106,7 @@ export default function ProductsPage() {
                     <CatIcon className="w-6 h-6" />
                   </div>
                   <div>
-                    <h2 className="font-display text-3xl md:text-4xl text-secondary-900 tracking-tight">
+                    <h2 className="font-display text-3xl md:text-4xl text-primary-900 tracking-tight">
                       {cat.name}
                     </h2>
                     <p className="text-secondary-500 mt-1 max-w-md">{cat.desc}</p>
@@ -116,49 +116,54 @@ export default function ProductsPage() {
               </Reveal>
 
               <div className="grid md:grid-cols-2 gap-8">
-                {cat.products.map((product, pIdx) => (
-                  <Reveal key={product.name} delay={pIdx * 0.1}>
-                    <div className="showcase-card overflow-hidden">
-                      <div className="relative aspect-[4/3] overflow-hidden">
-                        <Image
-                          src={images[product.imageKey] || product.defaultImage}
-                          alt={product.name}
-                          fill
-                          className="object-cover transition-transform duration-500 hover:scale-105"
-                        />
+                {cat.products.map((product, pIdx) => {
+                  const imgSrc = ready ? images[product.imageKey] : ''
+                  return (
+                    <Reveal key={product.name} delay={pIdx * 0.1}>
+                      <div className="showcase-card overflow-hidden">
+                        <div className="relative aspect-[4/3] overflow-hidden bg-primary-100">
+                          {imgSrc && (
+                            <Image
+                              src={imgSrc}
+                              alt={product.name}
+                              fill
+                              className="object-cover transition-transform duration-500 hover:scale-105"
+                            />
+                          )}
+                        </div>
+                        <div className="p-6 md:p-8">
+                          <h3 className="font-display text-2xl text-primary-900 tracking-tight">
+                            {product.name}
+                          </h3>
+                          <p className="text-secondary-500 leading-relaxed mt-2">{product.desc}</p>
+                          <ul className="mt-5 grid grid-cols-2 gap-2.5">
+                            {product.features.map((f, fi) => (
+                              <li key={f} className="flex items-center gap-2 text-sm text-secondary-600">
+                                <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${
+                                  fi % 2 === 0
+                                    ? isRed ? 'bg-accent-500' : 'bg-primary-500'
+                                    : isRed ? 'bg-primary-500' : 'bg-accent-500'
+                                }`}>
+                                  <Check className="w-2.5 h-2.5 text-white" />
+                                </div>
+                                <span className="font-medium">{f}</span>
+                              </li>
+                            ))}
+                          </ul>
+                          <Link
+                            href="/contact"
+                            className={`mt-6 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider transition-colors group ${
+                              isRed ? 'text-accent-600 hover:text-accent-700' : 'text-primary-600 hover:text-primary-700'
+                            }`}
+                          >
+                            Request Quote
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                          </Link>
+                        </div>
                       </div>
-                      <div className="p-6 md:p-8">
-                        <h3 className="font-display text-2xl text-secondary-900 tracking-tight">
-                          {product.name}
-                        </h3>
-                        <p className="text-secondary-500 leading-relaxed mt-2">{product.desc}</p>
-                        <ul className="mt-5 grid grid-cols-2 gap-2.5">
-                          {product.features.map((f, fi) => (
-                            <li key={f} className="flex items-center gap-2 text-sm text-secondary-600">
-                              <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${
-                                fi % 2 === 0
-                                  ? isRed ? 'bg-accent-500' : 'bg-primary-500'
-                                  : isRed ? 'bg-primary-500' : 'bg-accent-500'
-                              }`}>
-                                <Check className="w-2.5 h-2.5 text-white" />
-                              </div>
-                              <span className="font-medium">{f}</span>
-                            </li>
-                          ))}
-                        </ul>
-                        <Link
-                          href="/contact"
-                          className={`mt-6 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider transition-colors group ${
-                            isRed ? 'text-accent-600 hover:text-accent-700' : 'text-primary-600 hover:text-primary-700'
-                          }`}
-                        >
-                          Request Quote
-                          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                        </Link>
-                      </div>
-                    </div>
-                  </Reveal>
-                ))}
+                    </Reveal>
+                  )
+                })}
               </div>
             </div>
           </section>
@@ -180,7 +185,7 @@ export default function ProductsPage() {
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-5 shrink-0">
-                <a href="tel:+19084286253" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white rounded-full text-secondary-900 text-sm font-bold uppercase tracking-wider hover:bg-gray-50 transition-colors">
+                <a href="tel:+19084286253" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white rounded-full text-primary-700 text-sm font-bold uppercase tracking-wider hover:bg-gray-50 transition-colors">
                   <Phone className="w-4 h-4 text-accent-600" />
                   (908) 428-6253
                 </a>

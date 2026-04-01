@@ -28,7 +28,7 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-40 pb-20 lg:pt-48 lg:pb-28 bg-secondary-900 overflow-hidden">
+      <section className="relative pt-40 pb-20 lg:pt-48 lg:pb-28 bg-primary-900 overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]" style={{
           backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)',
           backgroundSize: '80px 80px',
@@ -41,14 +41,14 @@ export default function ContactPage() {
               Let&apos;s Start a<br />
               <span className="italic text-accent-400">Conversation</span>
             </h1>
-            <p className="mt-6 text-secondary-400 text-lg max-w-lg leading-relaxed">
+            <p className="mt-6 text-primary-200/60 text-lg max-w-lg leading-relaxed">
               Have a question or need a consultation? We&apos;re here to help
               you find the perfect solution.
             </p>
             <div className="breadcrumb-pill mt-6">
               <Link href="/" className="text-secondary-500 hover:text-primary-600 transition-colors">Home</Link>
               <ArrowRight className="w-3 h-3 text-secondary-300" />
-              <span className="text-secondary-800 font-semibold">Contact</span>
+              <span className="text-primary-800 font-semibold">Contact</span>
             </div>
           </motion.div>
         </div>
@@ -80,7 +80,7 @@ export default function ContactPage() {
                 <p className={`text-xs font-bold uppercase tracking-wider mb-1 ${
                   isRed ? 'text-accent-600' : 'text-primary-600'
                 }`}>{info.label}</p>
-                <p className="text-sm font-bold text-secondary-900 group-hover:text-primary-600 transition-colors">
+                <p className="text-sm font-bold text-primary-800 group-hover:text-primary-600 transition-colors">
                   {info.value}
                 </p>
                 <p className="text-xs text-secondary-400 mt-0.5">{info.sub}</p>
@@ -97,7 +97,7 @@ export default function ContactPage() {
             <Reveal className="lg:col-span-3">
               <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm">
                 <span className="section-tag mb-3">Send a Message</span>
-                <h2 className="font-display text-3xl md:text-4xl text-secondary-900 tracking-tight mt-2">
+                <h2 className="font-display text-3xl md:text-4xl text-primary-900 tracking-tight mt-2">
                   How Can We <span className="text-accent-600 italic">Help?</span>
                 </h2>
                 <div className="line-accent mt-4" />

@@ -95,7 +95,7 @@ html { scroll-behavior: smooth; }
   @apply shadow-xl -translate-y-1;
 }
 .service-card.filled-dark {
-  @apply bg-secondary-900 border-secondary-900 text-white;
+  @apply bg-primary-800 border-primary-800 text-white;
 }
 .service-card.filled-accent {
   @apply bg-accent-600 border-accent-600 text-white;

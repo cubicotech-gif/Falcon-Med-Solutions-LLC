@@ -36,49 +36,49 @@ function ensureFetch(): Promise<ImageMap> {
 }
 
 /**
- * Returns the image URL for a given slot key.
- * Starts with defaultUrl, swaps to DB value once loaded.
- * Once cached, returns DB value immediately (no flash on subsequent renders).
+ * Returns the DB image URL for a slot key.
+ * Returns '' while loading — components should show a placeholder/skeleton.
+ * Once cached, returns immediately with no flash.
  */
-export function useSiteImage(slotKey: string, defaultUrl: string): string {
-  const [imageUrl, setImageUrl] = useState(imageCache[slotKey] || defaultUrl)
+export function useSiteImage(slotKey: string, _defaultUrl: string): string {
+  // If already cached from a previous render, use it immediately
+  const [imageUrl, setImageUrl] = useState(imageCache[slotKey] || '')
+  const [ready, setReady] = useState(!!imageCache[slotKey])
 
   useEffect(() => {
-    // Already have the cached DB value — use it
     if (imageCache[slotKey]) {
       setImageUrl(imageCache[slotKey])
+      setReady(true)
       return
     }
 
-    // Fetch from API (single shared request for all hooks)
     ensureFetch().then((all) => {
-      if (all[slotKey]) {
-        setImageUrl(all[slotKey])
-      }
+      setImageUrl(all[slotKey] || _defaultUrl)
+      setReady(true)
     })
-  }, [slotKey, defaultUrl])
+  }, [slotKey, _defaultUrl])
 
+  if (!ready) return ''
   return imageUrl
 }
 
 export function useSiteImages(
   slots: { key: string; defaultUrl: string }[]
-): ImageMap {
+): { images: ImageMap; ready: boolean } {
+  const allCachedAlready = slots.every((s) => imageCache[s.key])
+
   const initial: ImageMap = {}
-  for (const slot of slots) {
-    initial[slot.key] = imageCache[slot.key] || slot.defaultUrl
+  if (allCachedAlready) {
+    for (const slot of slots) {
+      initial[slot.key] = imageCache[slot.key]
+    }
   }
 
   const [images, setImages] = useState<ImageMap>(initial)
+  const [ready, setReady] = useState(allCachedAlready)
 
   useEffect(() => {
-    const allCached = slots.every((s) => imageCache[s.key])
-    if (allCached) {
-      const cached: ImageMap = {}
-      for (const slot of slots) {
-        cached[slot.key] = imageCache[slot.key]
-      }
-      setImages(cached)
+    if (allCachedAlready) {
       return
     }
 
@@ -88,9 +88,10 @@ export function useSiteImages(
         result[slot.key] = all[slot.key] || slot.defaultUrl
       }
       setImages(result)
+      setReady(true)
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return images
+  return { images, ready }
 }

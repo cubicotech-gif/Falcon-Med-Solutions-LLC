@@ -45,7 +45,7 @@ export function FeaturedProducts() {
           className="text-center max-w-2xl mx-auto mb-14"
         >
           <span className="section-tag justify-center mb-3">What We Offer</span>
-          <h2 className="font-display text-4xl md:text-5xl text-secondary-900 tracking-tight leading-[1.1] mt-3">
+          <h2 className="font-display text-4xl md:text-5xl text-primary-900 tracking-tight leading-[1.1] mt-3">
             Our Core <span className="text-accent-600 italic">Services</span>
           </h2>
         </motion.div>
@@ -63,7 +63,7 @@ export function FeaturedProducts() {
                 className={`service-card ${s.variant} flex flex-col justify-between min-h-[280px]`}
               >
                 <div>
-                  <h3 className={`font-display text-2xl mb-3 ${isFilled ? 'text-white' : 'text-secondary-900'}`}>
+                  <h3 className={`font-display text-2xl mb-3 ${isFilled ? 'text-white' : 'text-primary-900'}`}>
                     {s.title}
                   </h3>
                   <p className={`text-sm leading-relaxed ${isFilled ? 'text-white/70' : 'text-secondary-500'}`}>
