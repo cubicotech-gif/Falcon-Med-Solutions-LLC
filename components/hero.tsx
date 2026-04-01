@@ -1,183 +1,194 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Button } from './ui/button'
-import { motion } from 'framer-motion'
-import { ArrowRight, Shield, Stethoscope, Truck, HeartPulse } from 'lucide-react'
+import { ArrowRight, Shield, Clock, Award, Star } from 'lucide-react'
 import { useSiteImage } from '@/hooks/use-site-image'
 
-const badges = [
-  { icon: Shield, label: 'FDA Certified' },
-  { icon: Stethoscope, label: 'Expert Guidance' },
-  { icon: Truck, label: 'Fast Delivery' },
-  { icon: HeartPulse, label: 'Patient First' },
-]
-
 export function Hero() {
-  const heroImage = useSiteImage('hero_main_image', 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80')
+  const heroImage = useSiteImage(
+    'hero-main',
+    'https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=900&q=80'
+  )
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary-900 via-primary-800 to-primary-900"></div>
-      <div className="absolute inset-0 bg-stripe-pattern opacity-30"></div>
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-gray-50 via-white to-primary-50/30">
+      {/* Background elements */}
+      <div className="orb orb-blue w-[500px] h-[500px] -top-40 -right-40 opacity-60" />
+      <div className="orb orb-red w-[300px] h-[300px] bottom-20 -left-20 opacity-40" />
+      <div className="absolute inset-0 dot-grid opacity-40" />
 
-      {/* Decorative circles */}
-      <div className="absolute top-20 right-1/4 w-96 h-96 bg-accent/10 rounded-full filter blur-3xl"></div>
-      <div className="absolute bottom-20 left-10 w-72 h-72 bg-primary-400/10 rounded-full filter blur-3xl"></div>
-
-      <div className="relative max-w-7xl mx-auto px-6 py-32 lg:py-40 w-full">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left content */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
-          >
-            {/* Badge */}
+      <div className="relative max-w-7xl mx-auto px-6 pt-32 pb-20 lg:pt-40 lg:pb-28 w-full">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+          {/* Left Content */}
+          <div className="relative z-10">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm font-medium border border-white/20"
-            >
-              <span className="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
-              Premium Medical Equipment Supplier
-            </motion.div>
-
-            {/* Main heading */}
-            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="font-display text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight"
+              transition={{ duration: 0.6 }}
             >
-              Your Trusted Partner in
-              <span className="text-accent-400"> Medical Care</span>
+              <div className="pill-badge mb-8">
+                <span className="pulse-dot" />
+                Premium Medical Equipment
+              </div>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="font-display text-5xl md:text-6xl xl:text-7xl tracking-tight text-secondary-900 leading-[1.05]"
+            >
+              Elevating{' '}
+              <span className="text-gradient-blue">Patient Care</span>{' '}
+              with Precision
             </motion.h1>
 
-            {/* Subheading */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-xl text-primary-200 leading-relaxed max-w-lg"
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="mt-6 text-lg text-secondary-500 max-w-lg leading-relaxed"
             >
-              Premium wheelchairs, mobility aids, diabetic care solutions, and orthopedic supports — delivered with care across New Jersey.
+              Trusted by healthcare professionals across the nation. We deliver
+              medical-grade equipment with expert guidance, ensuring comfort and
+              quality for every patient.
             </motion.p>
 
-            {/* CTA buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="flex flex-wrap gap-4"
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mt-10 flex flex-wrap gap-4"
             >
-              <Button asChild size="lg" className="bg-accent hover:bg-accent-700 rounded-full group">
-                <Link href="/contact">
-                  Schedule Free Consultation
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10 hover:text-white rounded-full">
-                <Link href="/products">
-                  Browse Products
-                </Link>
-              </Button>
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-3 px-7 py-4 bg-primary-600 text-white font-semibold rounded-full hover:bg-primary-700 transition-all hover:shadow-xl hover:shadow-primary-500/20"
+              >
+                Free Consultation
+                <span className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                  <ArrowRight className="w-4 h-4" />
+                </span>
+              </Link>
+              <Link
+                href="/products"
+                className="inline-flex items-center gap-2 px-7 py-4 bg-white text-secondary-700 font-semibold rounded-full border border-gray-200 hover:border-primary-200 hover:text-primary-600 hover:shadow-lg transition-all"
+              >
+                Browse Products
+              </Link>
             </motion.div>
 
-            {/* Trust indicators */}
+            {/* Trust row */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
-              className="flex flex-wrap gap-8 pt-8 border-t border-white/10"
+              transition={{ delay: 0.6 }}
+              className="mt-14 flex items-center gap-8"
             >
-              <div>
-                <div className="text-3xl font-bold text-white">500+</div>
-                <div className="text-sm text-primary-300">Happy Customers</div>
+              <div className="flex -space-x-2">
+                {[0, 1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className="w-10 h-10 rounded-full border-2 border-white bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center"
+                  >
+                    <Star className="w-4 h-4 text-primary-600" />
+                  </div>
+                ))}
               </div>
               <div>
-                <div className="text-3xl font-bold text-white">15+</div>
-                <div className="text-sm text-primary-300">Years Experience</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-white">100%</div>
-                <div className="text-sm text-primary-300">Quality Assured</div>
+                <div className="flex items-center gap-1">
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <p className="text-sm text-secondary-500 mt-0.5">
+                  Trusted by <span className="font-semibold text-secondary-700">500+</span> healthcare providers
+                </p>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
 
-          {/* Right image */}
+          {/* Right - Hero Image */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
             className="relative hidden lg:block"
           >
-            <div className="relative h-[580px] rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10">
+            <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl shadow-primary-900/10">
               <Image
                 src={heroImage}
-                alt="Medical professional providing care"
+                alt="Medical equipment"
                 fill
                 className="object-cover"
                 priority
               />
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-primary-900/50 to-transparent"></div>
-
-              {/* Bottom card */}
-              <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-lg">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-accent-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Shield className="h-6 w-6 text-accent" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-gray-900">Certified Quality</div>
-                    <div className="text-sm text-gray-600">All products meet FDA standards</div>
-                  </div>
-                </div>
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-primary-900/40 via-transparent to-transparent" />
             </div>
 
-            {/* Floating badge cards */}
+            {/* Floating card - top right */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 }}
-              className="absolute -top-4 -right-4 bg-white rounded-2xl p-5 shadow-xl"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.8 }}
+              className="absolute -top-4 -right-4 glass-card rounded-2xl p-4 shadow-xl"
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-primary-100 rounded-xl flex items-center justify-center">
-                  <Truck className="h-5 w-5 text-primary" />
+                <div className="w-12 h-12 rounded-xl bg-primary-500 flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <div className="text-sm font-medium text-gray-900">Same-Day Delivery</div>
-                  <div className="text-xs text-gray-600">Available in NJ</div>
+                  <p className="text-sm font-bold text-secondary-800">FDA Certified</p>
+                  <p className="text-xs text-secondary-400">Medical Grade</p>
                 </div>
               </div>
+            </motion.div>
+
+            {/* Floating card - bottom left */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1 }}
+              className="absolute -bottom-4 -left-4 glass-card rounded-2xl p-4 shadow-xl"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-accent-500 flex items-center justify-center">
+                  <Clock className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-secondary-800">15+ Years</p>
+                  <p className="text-xs text-secondary-400">Industry Experience</p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Award badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.2, type: 'spring' }}
+              className="absolute top-1/2 -left-8 w-16 h-16 rounded-full bg-white shadow-xl flex items-center justify-center"
+            >
+              <Award className="w-8 h-8 text-primary-600" />
             </motion.div>
           </motion.div>
         </div>
       </div>
 
-      {/* Bottom badges bar */}
-      <div className="absolute bottom-0 left-0 right-0 bg-white/5 backdrop-blur-sm border-t border-white/10 hidden lg:block">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex justify-between items-center">
-            {badges.map((badge, i) => (
-              <motion.div
-                key={badge.label}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1 + i * 0.1 }}
-                className="flex items-center gap-3 text-white/80"
-              >
-                <badge.icon className="h-5 w-5 text-accent-400" />
-                <span className="text-sm font-medium">{badge.label}</span>
-              </motion.div>
+      {/* Bottom marquee */}
+      <div className="absolute bottom-0 left-0 right-0 border-t border-gray-100 bg-white/80 backdrop-blur-sm">
+        <div className="overflow-hidden py-4">
+          <div className="flex animate-marquee whitespace-nowrap">
+            {[...Array(2)].map((_, setIndex) => (
+              <div key={setIndex} className="flex items-center gap-12 mx-6">
+                {['FDA Certified Equipment', 'Expert Medical Guidance', 'Same-Day Delivery Available', 'Patient-First Approach', '24/7 Support Available', 'Quality Guaranteed'].map((text, i) => (
+                  <span key={i} className="flex items-center gap-2 text-sm text-secondary-400 font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary-400" />
+                    {text}
+                  </span>
+                ))}
+              </div>
             ))}
           </div>
         </div>

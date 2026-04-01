@@ -2,73 +2,62 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Clock } from 'lucide-react'
 
-const footerLinks = {
-  products: [
-    { name: 'Wheelchairs', href: '/products#wheelchairs' },
-    { name: 'Mobility Aids', href: '/products#mobility-aids' },
-    { name: 'Diabetic Care', href: '/products#diabetic-care' },
-    { name: 'Orthopedic Braces', href: '/products#orthopedic' },
-  ],
-  company: [
-    { name: 'About Us', href: '/about' },
-    { name: 'Products', href: '/products' },
-    { name: 'Contact', href: '/contact' },
-  ],
-}
-
 export function Footer() {
   return (
-    <footer className="bg-primary-900 text-gray-300">
-      {/* Top accent bar */}
-      <div className="h-1 bg-gradient-to-r from-primary-500 via-accent to-primary-500"></div>
+    <footer className="relative bg-secondary-900 overflow-hidden">
+      {/* Top gradient line */}
+      <div className="h-px bg-gradient-to-r from-transparent via-primary-500 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Company Info */}
+      <div className="max-w-7xl mx-auto px-6 pt-16 pb-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+          {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="relative w-12 h-12">
-                <Image
-                  src="/logo.svg"
-                  alt="FalconMed Solutions"
-                  fill
-                  className="object-contain brightness-0 invert"
-                />
+            <Link href="/" className="flex items-center gap-3">
+              <div className="relative w-10 h-10">
+                <Image src="/logo.svg" alt="FalconMed" fill className="object-contain" />
               </div>
-              <div>
-                <div className="font-display text-xl text-white">
+              <div className="flex flex-col">
+                <span className="text-lg font-bold tracking-tight text-white leading-none">
                   Falcon<span className="text-accent-400">Med</span>
-                </div>
-                <div className="text-xs text-primary-300 tracking-wider uppercase">Solutions LLC</div>
+                </span>
+                <span className="text-[10px] tracking-[0.2em] uppercase text-secondary-500 font-medium">
+                  Solutions
+                </span>
               </div>
-            </div>
-            <p className="text-sm text-primary-300 leading-relaxed mb-6">
-              Premium medical equipment supplier dedicated to improving lives through quality products and exceptional service in New Jersey.
+            </Link>
+            <p className="mt-5 text-sm text-secondary-400 leading-relaxed max-w-xs">
+              Premium medical equipment and supplies, delivered with expert care
+              and personalized guidance for every patient.
             </p>
-            <div className="flex gap-3">
-              <a href="#" className="w-9 h-9 rounded-lg bg-primary-800 flex items-center justify-center hover:bg-accent transition-colors">
-                <Facebook className="h-4 w-4" />
-              </a>
-              <a href="#" className="w-9 h-9 rounded-lg bg-primary-800 flex items-center justify-center hover:bg-accent transition-colors">
-                <Twitter className="h-4 w-4" />
-              </a>
-              <a href="#" className="w-9 h-9 rounded-lg bg-primary-800 flex items-center justify-center hover:bg-accent transition-colors">
-                <Linkedin className="h-4 w-4" />
-              </a>
+            <div className="mt-6 flex gap-3">
+              {[
+                { icon: Facebook, href: '#', label: 'Facebook' },
+                { icon: Twitter, href: '#', label: 'Twitter' },
+                { icon: Linkedin, href: '#', label: 'LinkedIn' },
+              ].map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.06] flex items-center justify-center text-secondary-400 hover:text-primary-400 hover:bg-white/[0.1] hover:border-primary-500/30 transition-all"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Products */}
           <div>
-            <h3 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Products</h3>
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-5">Products</h3>
             <ul className="space-y-3">
-              {footerLinks.products.map((link) => (
-                <li key={link.name}>
+              {['Wheelchairs', 'Mobility Aids', 'Diabetic Care', 'Orthopedic Braces'].map((item) => (
+                <li key={item}>
                   <Link
-                    href={link.href}
-                    className="text-sm text-primary-300 hover:text-white transition-colors inline-block"
+                    href="/products"
+                    className="text-sm text-secondary-400 hover:text-primary-400 transition-colors"
                   >
-                    {link.name}
+                    {item}
                   </Link>
                 </li>
               ))}
@@ -77,15 +66,19 @@ export function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Company</h3>
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-5">Company</h3>
             <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.name}>
+              {[
+                { label: 'About Us', href: '/about' },
+                { label: 'Products', href: '/products' },
+                { label: 'Contact', href: '/contact' },
+              ].map((item) => (
+                <li key={item.label}>
                   <Link
-                    href={link.href}
-                    className="text-sm text-primary-300 hover:text-white transition-colors inline-block"
+                    href={item.href}
+                    className="text-sm text-secondary-400 hover:text-primary-400 transition-colors"
                   >
-                    {link.name}
+                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -94,69 +87,53 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Contact Us</h3>
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-5">Contact</h3>
             <ul className="space-y-4">
-              <li>
-                <a
-                  href="https://maps.google.com/?q=668+Rt-206+Suite-D+Hillsborough+NJ"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm flex items-start gap-3 text-primary-300 hover:text-white transition-colors"
-                >
-                  <MapPin className="h-5 w-5 flex-shrink-0 mt-0.5 text-accent-400" />
-                  <span>
-                    668 Rt-206, Suite-D<br />
-                    Hillsborough, NJ
-                  </span>
-                </a>
+              <li className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-primary-400 mt-0.5 shrink-0" />
+                <span className="text-sm text-secondary-400">
+                  1811 Lincoln Hwy, Edison,<br />NJ 08817
+                </span>
               </li>
               <li>
-                <a
-                  href="tel:9084286253"
-                  className="text-sm flex items-center gap-3 text-primary-300 hover:text-white transition-colors"
-                >
-                  <Phone className="h-5 w-5 flex-shrink-0 text-accent-400" />
+                <a href="tel:+19084286253" className="flex items-center gap-3 text-sm text-secondary-400 hover:text-primary-400 transition-colors">
+                  <Phone className="w-4 h-4 text-primary-400 shrink-0" />
                   (908) 428-6253
                 </a>
               </li>
               <li>
-                <a
-                  href="mailto:falconmedsolutions@gmail.com"
-                  className="text-sm flex items-center gap-3 text-primary-300 hover:text-white transition-colors"
-                >
-                  <Mail className="h-5 w-5 flex-shrink-0 text-accent-400" />
-                  falconmedsolutions@gmail.com
+                <a href="mailto:info@falconmedsolutions.com" className="flex items-center gap-3 text-sm text-secondary-400 hover:text-primary-400 transition-colors">
+                  <Mail className="w-4 h-4 text-primary-400 shrink-0" />
+                  info@falconmedsolutions.com
                 </a>
               </li>
-              <li>
-                <div className="text-sm flex items-start gap-3 text-primary-300">
-                  <Clock className="h-5 w-5 flex-shrink-0 mt-0.5 text-accent-400" />
-                  <span>
-                    Mon - Fri: 10 AM - 4 PM<br />
-                    Closed on Weekends &amp; Holidays
-                  </span>
-                </div>
+              <li className="flex items-start gap-3">
+                <Clock className="w-4 h-4 text-primary-400 mt-0.5 shrink-0" />
+                <span className="text-sm text-secondary-400">
+                  Mon - Fri: 9AM - 6PM<br />
+                  Sat: 10AM - 4PM
+                </span>
               </li>
             </ul>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-primary-800">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-primary-400">
-            <p>&copy; {new Date().getFullYear()} FalconMed Solutions LLC. All rights reserved.</p>
-            <p>
-              Developed by{' '}
-              <a
-                href="https://cubicotechnologies.com"
-                className="text-accent-400 hover:underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Cubico Technologies
-              </a>
-            </p>
-          </div>
+        <div className="mt-14 pt-6 border-t border-white/[0.06] flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-secondary-500">
+            &copy; {new Date().getFullYear()} FalconMed Solutions LLC. All rights reserved.
+          </p>
+          <p className="text-xs text-secondary-600">
+            Developed by{' '}
+            <a
+              href="https://cubicotechnologies.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary-400/70 hover:text-primary-400 transition-colors"
+            >
+              Cubico Technologies
+            </a>
+          </p>
         </div>
       </div>
     </footer>

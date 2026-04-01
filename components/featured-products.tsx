@@ -1,153 +1,150 @@
 'use client'
 
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
-import { Button } from './ui/button'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Check } from 'lucide-react'
 import { useSiteImages } from '@/hooks/use-site-image'
 
 const defaultProducts = [
   {
-    id: 1,
     name: 'Premium Wheelchairs',
     category: 'Mobility',
-    description: 'Lightweight, durable wheelchairs designed for maximum comfort and independence.',
-    imageSlot: 'featured_wheelchairs',
-    defaultImage: 'https://images.unsplash.com/photo-1583946099379-f9c9cb8bc030?w=600&q=80',
-    features: ['Lightweight aluminum frame', 'Adjustable footrests', 'Foldable design'],
+    description: 'Ergonomically designed for maximum comfort and independence in daily activities.',
+    features: ['Lightweight Frame', 'Adjustable Support', 'Easy Fold'],
+    imageKey: 'featured-wheelchairs',
+    defaultImage: 'https://images.unsplash.com/photo-1619204715997-1e8ed26753b0?w=600&q=80',
+    accent: 'primary',
   },
   {
-    id: 2,
-    name: 'Continuous Glucose Monitors',
-    category: 'Diabetic Care',
-    description: 'Real-time glucose monitoring with smartphone connectivity for better diabetes management.',
-    imageSlot: 'featured_cgm',
-    defaultImage: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80',
-    features: ['Real-time monitoring', 'Smartphone app', '14-day sensor life'],
-  },
-  {
-    id: 3,
-    name: 'Orthopedic Braces',
+    name: 'Mobility Aids',
     category: 'Support',
-    description: 'Medical-grade braces providing stability, pain relief, and enhanced recovery.',
-    imageSlot: 'featured_braces',
-    defaultImage: 'https://images.unsplash.com/photo-1620331925087-4a13be250c5d?w=600&q=80',
-    features: ['Adjustable compression', 'Breathable material', 'Non-slip design'],
+    description: 'Professional-grade walkers, canes, and support systems for confident movement.',
+    features: ['Anti-Slip Grip', 'Height Adjustable', 'Portable'],
+    imageKey: 'featured-mobility',
+    defaultImage: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80',
+    accent: 'accent',
   },
   {
-    id: 4,
-    name: 'Walkers & Rollators',
-    category: 'Mobility',
-    description: 'Sturdy walking support with ergonomic designs for seniors and recovery patients.',
-    imageSlot: 'featured_walkers',
-    defaultImage: 'https://images.unsplash.com/photo-1610349907345-19bf89ce8e3e?w=600&q=80',
-    features: ['Hand brakes', 'Padded seat', 'Storage basket'],
+    name: 'Diabetic Care',
+    category: 'Health Monitoring',
+    description: 'Accurate monitoring equipment and supplies for comprehensive diabetes management.',
+    features: ['FDA Approved', 'Digital Display', 'Auto-Tracking'],
+    imageKey: 'featured-diabetic',
+    defaultImage: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=600&q=80',
+    accent: 'primary',
+  },
+  {
+    name: 'Orthopedic Braces',
+    category: 'Recovery',
+    description: 'Medical-grade braces and supports for effective recovery and pain management.',
+    features: ['Custom Fit', 'Breathable', 'Medical Grade'],
+    imageKey: 'featured-orthopedic',
+    defaultImage: 'https://images.unsplash.com/photo-1559757175-7cb056fba93d?w=600&q=80',
+    accent: 'accent',
   },
 ]
 
 export function FeaturedProducts() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-100px' })
+
   const images = useSiteImages(
-    defaultProducts.map((p) => ({ key: p.imageSlot, defaultUrl: p.defaultImage }))
+    defaultProducts.map((p) => ({ key: p.imageKey, defaultUrl: p.defaultImage }))
   )
 
-  const products = defaultProducts.map((p) => ({
-    ...p,
-    image: images[p.imageSlot] || p.defaultImage,
-  }))
-
   return (
-    <section className="py-24 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
-        >
-          <span className="inline-block px-4 py-1.5 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-4 uppercase tracking-wider">
-            Our Products
-          </span>
-          <h2 className="font-display text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-            Medical Equipment You Can Trust
-          </h2>
-          <p className="text-xl text-gray-600">
-            Explore our comprehensive range of certified medical supplies and equipment
-          </p>
-        </motion.div>
+    <section ref={ref} className="relative py-28 lg:py-36 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50/50 to-white" />
+      <div className="orb orb-blue w-[400px] h-[400px] top-0 right-0 opacity-30" />
 
-        {/* Products grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {products.map((product, index) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
+      <div className="relative max-w-7xl mx-auto px-6">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="pill-badge mb-4">Our Products</span>
+            <h2 className="font-display text-4xl md:text-5xl tracking-tight text-secondary-900">
+              Equipment You Can<br />
+              <span className="text-gradient-blue">Trust & Rely On</span>
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ delay: 0.3 }}
+          >
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors group"
             >
-              <Card className="h-full hover:shadow-xl transition-all duration-300 group overflow-hidden border-0 shadow-md bg-white">
-                <div className="relative h-56 overflow-hidden">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                  <div className="absolute top-3 left-3">
-                    <span className="inline-block px-3 py-1 bg-primary text-white rounded-full text-xs font-semibold">
-                      {product.category}
-                    </span>
-                  </div>
+              View All Products
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Bento Product Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {defaultProducts.map((product, i) => (
+            <motion.div
+              key={product.name}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="bento-card group"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <Image
+                  src={images[product.imageKey] || product.defaultImage}
+                  alt={product.name}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+
+                <div className="absolute top-4 left-4">
+                  <span className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold ${
+                    product.accent === 'primary'
+                      ? 'bg-primary-500 text-white'
+                      : 'bg-accent-500 text-white'
+                  }`}>
+                    {product.category}
+                  </span>
                 </div>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                    {product.name}
-                  </CardTitle>
-                  <CardDescription className="line-clamp-2 text-sm">
-                    {product.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pb-3">
-                  <ul className="space-y-1.5">
-                    {product.features.map((feature, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
-                        <span className="w-1.5 h-1.5 rounded-full bg-accent mt-1.5 flex-shrink-0"></span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="ghost" className="w-full group/btn text-primary hover:bg-primary-50">
-                    Learn More
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
-                </CardFooter>
-              </Card>
+
+                <div className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white/90 flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                  <ArrowUpRight className="w-5 h-5 text-secondary-800" />
+                </div>
+              </div>
+
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-secondary-900 group-hover:text-primary-600 transition-colors">
+                  {product.name}
+                </h3>
+                <p className="mt-2 text-sm text-secondary-500 leading-relaxed">
+                  {product.description}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {product.features.map((f) => (
+                    <span
+                      key={f}
+                      className="inline-flex items-center gap-1 text-xs font-medium text-secondary-500 bg-gray-50 px-2.5 py-1 rounded-full"
+                    >
+                      <Check className="w-3 h-3 text-primary-500" />
+                      {f}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="text-center"
-        >
-          <Button asChild size="lg" className="rounded-full">
-            <Link href="/products">
-              View All Products
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-        </motion.div>
       </div>
     </section>
   )
