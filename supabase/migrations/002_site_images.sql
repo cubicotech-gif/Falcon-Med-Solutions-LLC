@@ -45,34 +45,44 @@ CREATE POLICY "Allow deletes from site-images bucket"
   ON storage.objects FOR DELETE
   USING (bucket_id = 'site-images');
 
--- Seed all image slots with current placeholder URLs
+-- Seed all image slots matching the redesigned site components
 
 -- General
 INSERT INTO site_images (slot_key, image_url, label, section) VALUES
-('site_logo', '/logo.svg', 'Site Logo', 'General');
+('site-logo', '/logo.svg', 'Site Logo', 'General');
 
--- Homepage Hero
+-- Homepage Hero (hero.tsx uses 'hero-main')
 INSERT INTO site_images (slot_key, image_url, label, section) VALUES
-('hero_main_image', 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80', 'Hero Background Image', 'Homepage Hero');
+('hero-main', 'https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=1400&q=80', 'Hero Background Image', 'Homepage Hero');
 
--- About Page
+-- Homepage Showcase (services-showcase.tsx uses these keys)
 INSERT INTO site_images (slot_key, image_url, label, section) VALUES
-('about_story_image', 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=800&q=80', 'Our Story Image', 'About Page');
+('featured-wheelchairs', 'https://images.unsplash.com/photo-1619204715997-1e8ed26753b0?w=600&q=80', 'Wheelchairs Showcase', 'Homepage Showcase'),
+('featured-mobility', 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80', 'Mobility Aids Showcase', 'Homepage Showcase'),
+('featured-diabetic', 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=600&q=80', 'Diabetic Care Showcase', 'Homepage Showcase'),
+('featured-orthopedic', 'https://images.unsplash.com/photo-1559757175-7cb056fba93d?w=600&q=80', 'Orthopedic Braces Showcase', 'Homepage Showcase');
 
--- Featured Products (Homepage)
+-- About Section on homepage (why-choose-us.tsx uses these keys)
 INSERT INTO site_images (slot_key, image_url, label, section) VALUES
-('featured_wheelchairs', 'https://images.unsplash.com/photo-1583946099379-f9c9cb8bc030?w=600&q=80', 'Premium Wheelchairs', 'Featured Products'),
-('featured_cgm', 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80', 'Continuous Glucose Monitors', 'Featured Products'),
-('featured_braces', 'https://images.unsplash.com/photo-1620331925087-4a13be250c5d?w=600&q=80', 'Orthopedic Braces', 'Featured Products'),
-('featured_walkers', 'https://images.unsplash.com/photo-1610349907345-19bf89ce8e3e?w=600&q=80', 'Walkers & Rollators', 'Featured Products');
+('about-main', 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80', 'About Main Image', 'About Section'),
+('about-secondary', 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=400&q=80', 'About Secondary Image', 'About Section');
 
--- Products Page
+-- CTA Section (cta.tsx uses this key)
 INSERT INTO site_images (slot_key, image_url, label, section) VALUES
-('product_manual_wheelchair', 'https://images.unsplash.com/photo-1583946099379-f9c9cb8bc030?w=600&q=80', 'Manual Wheelchair - Standard', 'Products Page'),
-('product_transport_wheelchair', 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=600&q=80', 'Transport Wheelchair', 'Products Page'),
-('product_folding_walker', 'https://images.unsplash.com/photo-1610349907345-19bf89ce8e3e?w=600&q=80', 'Folding Walker with Wheels', 'Products Page'),
-('product_walking_cane', 'https://images.unsplash.com/photo-1584613132429-a50a3b5c0e86?w=600&q=80', 'Aluminum Walking Cane', 'Products Page'),
-('product_cgm', 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80', 'Continuous Glucose Monitor (CGM)', 'Products Page'),
-('product_glucose_meter', 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80', 'Blood Glucose Meter Kit', 'Products Page'),
-('product_knee_brace', 'https://images.unsplash.com/photo-1620331925087-4a13be250c5d?w=600&q=80', 'Knee Support Brace', 'Products Page'),
-('product_lumbar_support', 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80', 'Lumbar Back Support', 'Products Page');
+('cta-background', 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80', 'CTA Background Image', 'CTA Section');
+
+-- About Page (about/page.tsx uses these keys)
+INSERT INTO site_images (slot_key, image_url, label, section) VALUES
+('about-hero', 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1400&q=80', 'About Page Hero', 'About Page'),
+('about-story', 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80', 'Our Story Image', 'About Page');
+
+-- Products Page (products/page.tsx uses these keys)
+INSERT INTO site_images (slot_key, image_url, label, section) VALUES
+('product-wheelchair-standard', 'https://images.unsplash.com/photo-1619204715997-1e8ed26753b0?w=600&q=80', 'Standard Wheelchair', 'Products Page'),
+('product-wheelchair-transport', 'https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=600&q=80', 'Transport Wheelchair', 'Products Page'),
+('product-rollator', 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80', 'Rollator Walker', 'Products Page'),
+('product-cane', 'https://images.unsplash.com/photo-1559757175-7cb056fba93d?w=600&q=80', 'Walking Cane', 'Products Page'),
+('product-glucose', 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=600&q=80', 'Blood Glucose Monitor', 'Products Page'),
+('product-diabetic-kit', 'https://images.unsplash.com/photo-1583912267550-d6c7e3e5f3b2?w=600&q=80', 'Diabetic Supply Kit', 'Products Page'),
+('product-knee-brace', 'https://images.unsplash.com/photo-1559757175-7cb056fba93d?w=600&q=80', 'Knee Brace', 'Products Page'),
+('product-back-support', 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80', 'Back Support Belt', 'Products Page');
