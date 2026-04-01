@@ -1,140 +1,121 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin } from 'lucide-react'
-
-const links = {
-  products: ['Wheelchairs', 'Mobility Aids', 'Diabetic Care', 'Orthopedic Braces'],
-  company: [
-    { label: 'About', href: '/about' },
-    { label: 'Products', href: '/products' },
-    { label: 'Contact', href: '/contact' },
-  ],
-}
+import { Phone, Mail, MapPin, Clock, Facebook, Twitter, Linkedin, ArrowRight } from 'lucide-react'
 
 export function Footer() {
   return (
-    <footer className="bg-[var(--ink)]">
-      {/* Thin gradient top line */}
-      <div className="h-px bg-gradient-to-r from-transparent via-primary-500/50 to-transparent" />
-
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-10 pt-20 pb-10">
-        {/* Top section - big text CTA */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 pb-16 border-b border-white/[0.06]">
+    <footer className="bg-secondary-900 text-white">
+      {/* Main footer */}
+      <div className="max-w-7xl mx-auto px-6 pt-16 pb-10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+          {/* Brand */}
           <div>
-            <Link href="/" className="flex items-center gap-2.5 mb-6">
-              <div className="relative w-9 h-9">
+            <Link href="/" className="flex items-center gap-2.5 mb-5">
+              <div className="relative w-10 h-10">
                 <Image src="/logo.svg" alt="FalconMed" fill className="object-contain" />
               </div>
-              <span className="font-display text-xl text-white tracking-tight">
+              <span className="font-display text-xl text-white">
                 Falcon<span className="text-accent-400">Med</span>
               </span>
             </Link>
-            <p className="text-secondary-500 text-sm max-w-xs leading-relaxed">
-              Premium medical equipment delivered with expert care and
-              personalized guidance for every patient.
+            <p className="text-secondary-400 text-sm leading-relaxed mb-6">
+              Premium medical equipment and supplies, delivered with expert care
+              and personalized guidance for every patient.
             </p>
+            <div className="flex gap-2">
+              {[Facebook, Twitter, Linkedin].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-secondary-400 hover:bg-primary-600 hover:border-primary-600 hover:text-white transition-all"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
           </div>
 
-          <div className="flex gap-3">
-            {[
-              { icon: Facebook, label: 'Facebook' },
-              { icon: Twitter, label: 'Twitter' },
-              { icon: Linkedin, label: 'LinkedIn' },
-            ].map(({ icon: Icon, label }) => (
-              <a
-                key={label}
-                href="#"
-                aria-label={label}
-                className="w-10 h-10 border border-white/[0.08] flex items-center justify-center text-secondary-500 hover:text-primary-400 hover:border-primary-500/30 transition-all"
-              >
-                <Icon className="w-4 h-4" />
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Links grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 py-14">
+          {/* Quick Links */}
           <div>
-            <h4 className="label-sm text-white/40 mb-5">Products</h4>
+            <h4 className="text-sm font-bold uppercase tracking-wider mb-5">Quick Links</h4>
             <ul className="space-y-3">
-              {links.products.map((p) => (
-                <li key={p}>
-                  <Link href="/products" className="text-sm text-secondary-500 hover:text-primary-400 transition-colors">
-                    {p}
+              {[
+                { label: 'About Us', href: '/about' },
+                { label: 'Our Products', href: '/products' },
+                { label: 'Contact Us', href: '/contact' },
+                { label: 'Get a Quote', href: '/contact' },
+              ].map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="flex items-center gap-2 text-sm text-secondary-400 hover:text-primary-400 transition-colors group">
+                    <ArrowRight className="w-3 h-3 text-primary-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
+          {/* Products */}
           <div>
-            <h4 className="label-sm text-white/40 mb-5">Company</h4>
+            <h4 className="text-sm font-bold uppercase tracking-wider mb-5">Products</h4>
             <ul className="space-y-3">
-              {links.company.map((c) => (
-                <li key={c.label}>
-                  <Link href={c.href} className="text-sm text-secondary-500 hover:text-primary-400 transition-colors">
-                    {c.label}
+              {['Wheelchairs', 'Mobility Aids', 'Diabetic Care', 'Orthopedic Braces'].map((item) => (
+                <li key={item}>
+                  <Link href="/products" className="flex items-center gap-2 text-sm text-secondary-400 hover:text-primary-400 transition-colors group">
+                    <ArrowRight className="w-3 h-3 text-primary-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    {item}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
+          {/* Contact */}
           <div>
-            <h4 className="label-sm text-white/40 mb-5">Contact</h4>
-            <ul className="space-y-4 text-sm text-secondary-500">
+            <h4 className="text-sm font-bold uppercase tracking-wider mb-5">Contact Info</h4>
+            <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-primary-500 mt-0.5 shrink-0" />
-                1811 Lincoln Hwy,<br />Edison, NJ 08817
+                <div className="w-8 h-8 rounded-lg bg-primary-600/20 flex items-center justify-center shrink-0 mt-0.5">
+                  <MapPin className="w-4 h-4 text-primary-400" />
+                </div>
+                <span className="text-sm text-secondary-400">1811 Lincoln Hwy,<br />Edison, NJ 08817</span>
               </li>
               <li>
                 <a href="tel:+19084286253" className="flex items-center gap-3 hover:text-primary-400 transition-colors">
-                  <Phone className="w-4 h-4 text-primary-500 shrink-0" />
-                  (908) 428-6253
+                  <div className="w-8 h-8 rounded-lg bg-primary-600/20 flex items-center justify-center shrink-0">
+                    <Phone className="w-4 h-4 text-primary-400" />
+                  </div>
+                  <span className="text-sm text-secondary-400">(908) 428-6253</span>
                 </a>
               </li>
               <li>
                 <a href="mailto:info@falconmedsolutions.com" className="flex items-center gap-3 hover:text-primary-400 transition-colors">
-                  <Mail className="w-4 h-4 text-primary-500 shrink-0" />
-                  info@falconmedsolutions.com
+                  <div className="w-8 h-8 rounded-lg bg-primary-600/20 flex items-center justify-center shrink-0">
+                    <Mail className="w-4 h-4 text-primary-400" />
+                  </div>
+                  <span className="text-sm text-secondary-400">info@falconmedsolutions.com</span>
                 </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-lg bg-primary-600/20 flex items-center justify-center shrink-0 mt-0.5">
+                  <Clock className="w-4 h-4 text-primary-400" />
+                </div>
+                <span className="text-sm text-secondary-400">Mon-Fri: 9AM-6PM<br />Sat: 10AM-4PM</span>
               </li>
             </ul>
           </div>
-
-          <div>
-            <h4 className="label-sm text-white/40 mb-5">Hours</h4>
-            <div className="text-sm text-secondary-500 space-y-2">
-              <div className="flex justify-between">
-                <span>Mon — Fri</span>
-                <span className="text-white/50">9AM — 6PM</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Saturday</span>
-                <span className="text-white/50">10AM — 4PM</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Sunday</span>
-                <span className="text-white/50">Closed</span>
-              </div>
-            </div>
-          </div>
         </div>
+      </div>
 
-        {/* Bottom */}
-        <div className="pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-[11px] text-secondary-600 tracking-wide">
+      {/* Bottom bar */}
+      <div className="border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row justify-between items-center gap-3">
+          <p className="text-xs text-secondary-500">
             &copy; {new Date().getFullYear()} FalconMed Solutions LLC. All rights reserved.
           </p>
-          <p className="text-[11px] text-secondary-700 tracking-wide">
+          <p className="text-xs text-secondary-600">
             Developed by{' '}
-            <a
-              href="https://cubicotechnologies.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary-500/60 hover:text-primary-400 transition-colors"
-            >
+            <a href="https://cubicotechnologies.com" target="_blank" rel="noopener noreferrer" className="text-primary-400/80 hover:text-primary-400 transition-colors">
               Cubico Technologies
             </a>
           </p>

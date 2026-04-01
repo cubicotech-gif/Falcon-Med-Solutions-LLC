@@ -3,102 +3,80 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { useSiteImage } from '@/hooks/use-site-image'
 
 export function Hero() {
   const heroImg = useSiteImage(
     'hero-main',
-    'https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=1200&q=80'
+    'https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=1400&q=80'
   )
 
   return (
-    <section className="relative min-h-screen overflow-hidden">
-      {/* Full bleed hero image */}
+    <section className="relative min-h-[85vh] flex items-center overflow-hidden">
+      {/* Background image */}
       <div className="absolute inset-0">
-        <Image
-          src={heroImg}
-          alt="Medical care"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--ink)]/90 via-[var(--ink)]/60 to-transparent" />
+        <Image src={heroImg} alt="Medical care" fill className="object-cover" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-secondary-900/85 via-secondary-900/50 to-transparent" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-10 pt-44 pb-32 min-h-screen flex flex-col justify-end">
-        <div className="max-w-3xl">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 w-full">
+        <div className="max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.6 }}
           >
-            <span className="label-sm text-primary-300 mb-6 block">
-              Premium Medical Equipment Supplier
-            </span>
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-8">
+              <span className="px-2.5 py-0.5 bg-primary-500 text-white text-xs font-bold rounded-full uppercase">FalconMed</span>
+              <span className="text-white/90 text-sm font-medium uppercase tracking-wider">Premium Medical Equipment</span>
+            </div>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.15 }}
-            className="font-display text-white leading-[0.95] tracking-tight"
-            style={{ fontSize: 'clamp(2.8rem, 6vw, 5.5rem)' }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="font-display text-white leading-[1.05] tracking-tight"
+            style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}
           >
-            Your Trusted Partner
-            <br />
-            in <span className="italic text-primary-300">Patient Care</span>
+            Your Trusted Partner in{' '}
+            <span className="text-primary-300 italic">Quality Healthcare</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="mt-8 text-lg text-white/60 max-w-xl leading-relaxed"
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-6 text-white/70 text-lg max-w-lg leading-relaxed"
           >
-            Delivering FDA-certified medical equipment with expert consultation,
-            personalized fitting, and dedicated aftercare — for over 15 years.
+            Personalized medical equipment solutions to improve your quality of life.
+            Get expert consultation for mobility, diabetic care, and orthopedic needs.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-10 flex flex-wrap items-center gap-5"
+            transition={{ duration: 0.6, delay: 0.45 }}
+            className="mt-10"
           >
-            <Link href="/contact" className="btn-solid">
-              Book Free Consultation
-              <ArrowUpRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/products"
-              className="text-sm font-semibold uppercase tracking-[0.12em] text-white/70 hover:text-white border-b border-white/30 hover:border-white pb-1 transition-all"
-            >
-              Explore Products
+            <Link href="/contact" className="pill-btn-arrow">
+              <span className="pill-text">Schedule Consultation</span>
+              <span className="pill-arrow"><ArrowRight className="w-4 h-4" /></span>
             </Link>
           </motion.div>
         </div>
+      </div>
 
-        {/* Bottom stats row */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 rounded overflow-hidden"
-        >
-          {[
-            { num: '15+', text: 'Years Experience' },
-            { num: '500+', text: 'Customers Served' },
-            { num: '1000+', text: 'Products Delivered' },
-            { num: '100%', text: 'Quality Assured' },
-          ].map((s, i) => (
-            <div key={i} className="bg-[var(--ink)]/60 backdrop-blur-sm px-6 py-5">
-              <p className="font-display text-3xl md:text-4xl text-white tracking-tight">{s.num}</p>
-              <p className="text-xs text-white/40 mt-1 uppercase tracking-wider">{s.text}</p>
-            </div>
-          ))}
-        </motion.div>
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 right-8 hidden lg:flex flex-col gap-2">
+        <button className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/60 hover:bg-white/10 transition-colors">
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7-7 7 7" /></svg>
+        </button>
+        <button className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/60 hover:bg-white/10 transition-colors">
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7" /></svg>
+        </button>
       </div>
     </section>
   )

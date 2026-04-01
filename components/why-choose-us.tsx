@@ -1,118 +1,80 @@
 'use client'
 
 import { useRef } from 'react'
+import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
-import {
-  Shield,
-  HeartHandshake,
-  Truck,
-  ShieldCheck,
-  Headphones,
-  Zap,
-} from 'lucide-react'
-
-const features = [
-  {
-    icon: Shield,
-    num: '01',
-    title: 'Medical-Grade Quality',
-    description: 'Every product meets rigorous FDA standards and healthcare regulations.',
-  },
-  {
-    icon: HeartHandshake,
-    num: '02',
-    title: 'Expert Consultation',
-    description: 'Personalized guidance from medical specialists for every unique need.',
-  },
-  {
-    icon: Truck,
-    num: '03',
-    title: 'Rapid Delivery',
-    description: 'Same-day and next-day delivery options across the Tri-State area.',
-  },
-  {
-    icon: ShieldCheck,
-    num: '04',
-    title: 'Warranty Protection',
-    description: 'Comprehensive coverage and hassle-free replacements on all equipment.',
-  },
-  {
-    icon: Headphones,
-    num: '05',
-    title: 'Dedicated Support',
-    description: 'Round-the-clock assistance from knowledgeable healthcare professionals.',
-  },
-  {
-    icon: Zap,
-    num: '06',
-    title: 'Quick Setup',
-    description: 'Professional installation and training to get patients mobile faster.',
-  },
-]
+import { Check } from 'lucide-react'
+import { useSiteImage } from '@/hooks/use-site-image'
 
 export function WhyChooseUs() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
-  return (
-    <section ref={ref} className="relative py-28 lg:py-36 bg-[var(--ink)] overflow-hidden">
-      {/* Subtle grid lines */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{
-        backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)',
-        backgroundSize: '80px 80px'
-      }} />
+  const mainImg = useSiteImage(
+    'about-main',
+    'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80'
+  )
+  const secondaryImg = useSiteImage(
+    'about-secondary',
+    'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=400&q=80'
+  )
 
-      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-10">
-        {/* Header */}
-        <div className="grid lg:grid-cols-2 gap-10 mb-20">
+  return (
+    <section ref={ref} className="py-24 lg:py-32 bg-tint">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+          {/* Left - Text */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
           >
-            <span className="label-sm text-primary-400 mb-4 block">Why Choose Us</span>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-white tracking-tight leading-[1]">
-              Built on Trust,<br />
-              Driven by <span className="italic text-primary-400">Care</span>
+            <span className="section-tag mb-4">About Us</span>
+            <h2 className="font-display text-4xl md:text-5xl text-secondary-900 tracking-tight leading-[1.1] mt-3">
+              A Trusted Partner in{' '}
+              <span className="text-primary-600 italic">Medical Equipment</span>
             </h2>
-          </motion.div>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2 }}
-            className="text-secondary-400 text-lg leading-relaxed self-end max-w-md"
-          >
-            We go beyond supplying equipment. From initial consultation to
-            aftercare, we&apos;re your dedicated partner in patient wellbeing.
-          </motion.p>
-        </div>
 
-        {/* Feature grid - 3x2 with left accent borders */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06] rounded overflow-hidden">
-          {features.map((f, i) => {
-            const Icon = f.icon
-            return (
-              <motion.div
-                key={f.title}
-                initial={{ opacity: 0, y: 25 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
-                className="bg-[var(--ink)] p-8 lg:p-10 group hover:bg-white/[0.03] transition-colors duration-500"
-              >
-                <div className="flex items-start gap-5">
-                  <span className="font-display text-3xl text-white/10 leading-none shrink-0">
-                    {f.num}
-                  </span>
-                  <div>
-                    <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center mb-4 group-hover:border-primary-500/40 transition-colors">
-                      <Icon className="w-5 h-5 text-primary-400" />
-                    </div>
-                    <h3 className="text-lg font-bold text-white mb-2">{f.title}</h3>
-                    <p className="text-sm text-secondary-500 leading-relaxed">{f.description}</p>
+            <p className="mt-6 text-secondary-500 leading-relaxed drop-cap">
+              We are a dedicated team of medical equipment specialists with over 15 years
+              of experience in providing quality, FDA-certified products. Our mission is to
+              help patients, families, and healthcare facilities find comfort and independence.
+            </p>
+
+            <div className="mt-8 grid sm:grid-cols-2 gap-3">
+              {[
+                'Premium Wheelchair Solutions',
+                'Expert Consultation & Fitting',
+                'FDA-Certified Equipment',
+                'Insurance & Billing Support',
+              ].map((item) => (
+                <div key={item} className="flex items-center gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-primary-500 flex items-center justify-center shrink-0">
+                    <Check className="w-3 h-3 text-white" />
                   </div>
+                  <span className="text-sm font-medium text-secondary-700">{item}</span>
                 </div>
-              </motion.div>
-            )
-          })}
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right - Overlapping images */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="relative"
+          >
+            {/* Main image */}
+            <div className="relative rounded-2xl overflow-hidden aspect-[4/5] shadow-xl">
+              <Image src={mainImg} alt="Medical equipment specialist" fill className="object-cover" />
+            </div>
+
+            {/* Overlapping smaller image */}
+            <div className="absolute -bottom-6 -right-4 lg:-right-8 w-40 h-48 lg:w-48 lg:h-56 rounded-2xl overflow-hidden border-4 border-white shadow-xl">
+              <Image src={secondaryImg} alt="Patient care" fill className="object-cover" />
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

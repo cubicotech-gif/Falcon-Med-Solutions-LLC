@@ -54,7 +54,7 @@ function ImageUploadCard({ image, onUploadSuccess }: { image: SiteImage; onUploa
     }
   }
 
-  const isLogo = image.slot_key === 'site_logo'
+  const isLogo = image.slot_key === 'site-logo'
 
   return (
     <Card className="overflow-hidden border-0 shadow-md">
@@ -172,12 +172,22 @@ export default function AdminPage() {
   const sectionMeta: Record<string, { description: string; pageLink?: string }> = {
     'General': { description: 'Logo and branding assets used across the site' },
     'Homepage Hero': { description: 'Main banner image on the homepage', pageLink: '/' },
+    'Homepage Showcase': { description: 'Product showcase images on the homepage', pageLink: '/' },
+    'About Section': { description: 'Images in the About Us section on homepage', pageLink: '/' },
+    'CTA Section': { description: 'Background image for the consultation section', pageLink: '/' },
     'About Page': { description: 'Images on the About Us page', pageLink: '/about' },
-    'Featured Products': { description: 'Product images shown on the homepage', pageLink: '/' },
     'Products Page': { description: 'Product images on the dedicated products page', pageLink: '/products' },
   }
 
-  const sectionOrder = ['General', 'Homepage Hero', 'About Page', 'Featured Products', 'Products Page']
+  const sectionOrder = [
+    'General',
+    'Homepage Hero',
+    'Homepage Showcase',
+    'About Section',
+    'CTA Section',
+    'About Page',
+    'Products Page',
+  ]
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -256,7 +266,7 @@ export default function AdminPage() {
                 )}
               </div>
               <div className={`grid gap-6 ${
-                sectionName === 'General' || sectionName === 'Homepage Hero' || sectionName === 'About Page'
+                sectionName === 'General' || sectionName === 'Homepage Hero' || sectionName === 'CTA Section'
                   ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
                   : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
               }`}>

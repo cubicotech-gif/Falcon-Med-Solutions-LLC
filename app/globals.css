@@ -6,180 +6,153 @@
 
 @layer base {
   :root {
-    --background: 30 20% 97%;
+    --background: 0 0% 100%;
     --foreground: 220 20% 10%;
-    --card: 30 20% 97%;
+    --card: 0 0% 100%;
     --card-foreground: 220 20% 10%;
-    --popover: 30 20% 97%;
+    --popover: 0 0% 100%;
     --popover-foreground: 220 20% 10%;
     --primary: 211 78% 42%;
     --primary-foreground: 0 0% 100%;
     --secondary: 215 25% 27%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 30 10% 93%;
+    --muted: 210 40% 96%;
     --muted-foreground: 215 10% 46%;
     --accent: 0 72% 51%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 30 15% 88%;
-    --input: 30 15% 88%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
     --ring: 211 78% 42%;
     --radius: 0.5rem;
-    --cream: #F8F6F3;
-    --ink: #1A1A2E;
   }
-
   .dark {
     --background: 220 20% 6%;
     --foreground: 0 0% 98%;
-    --card: 220 20% 6%;
-    --card-foreground: 0 0% 98%;
-    --popover: 220 20% 6%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 211 78% 42%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 215 25% 27%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 220 15% 15%;
-    --muted-foreground: 215 10% 60%;
-    --accent: 0 72% 51%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 211 78% 42%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
   body {
-    @apply text-foreground;
-    background-color: var(--cream);
+    @apply bg-white text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-/* Smooth scroll & selection */
 html { scroll-behavior: smooth; }
-::selection { @apply bg-primary-600 text-white; }
+::selection { @apply bg-primary-500 text-white; }
 
-/* Minimal scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #c5c0b8; border-radius: 99px; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { @apply bg-primary-300 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-primary-500; }
 
-/* ===== EDITORIAL DESIGN SYSTEM ===== */
+/* ===== MEDNIX-INSPIRED DESIGN SYSTEM ===== */
 
-/* Horizontal rule accent */
-.hr-accent {
-  @apply h-px w-16;
-  background: linear-gradient(90deg, #1565C0, #DC2626);
+/* Section tag: dot + label */
+.section-tag {
+  @apply inline-flex items-center gap-2 text-sm font-medium text-primary-600;
+}
+.section-tag::before {
+  content: '';
+  @apply w-2 h-2 rounded-full bg-primary-500 inline-block;
 }
 
-/* Oversized number style */
-.big-number {
-  font-family: 'DM Serif Display', Georgia, serif;
-  font-size: clamp(3.5rem, 8vw, 7rem);
-  line-height: 0.9;
-  letter-spacing: -0.03em;
-  color: var(--ink);
+/* Pill button - primary filled */
+.pill-btn {
+  @apply inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300;
+  @apply bg-primary-600 text-white hover:bg-primary-700 hover:shadow-lg;
 }
 
-/* Muted label */
-.label-sm {
-  @apply text-xs font-semibold uppercase tracking-[0.15em];
-  color: #94918b;
+/* Pill button with separate arrow circle */
+.pill-btn-arrow {
+  @apply inline-flex items-center gap-0 rounded-full text-sm font-semibold transition-all duration-300;
+}
+.pill-btn-arrow .pill-text {
+  @apply px-5 py-3 bg-primary-600 text-white rounded-l-full hover:bg-primary-700;
+}
+.pill-btn-arrow .pill-arrow {
+  @apply w-11 h-11 flex items-center justify-center bg-white text-primary-600 rounded-full -ml-1 shadow-md;
+  @apply hover:bg-primary-50 transition-colors;
 }
 
-/* Horizontal scroll product rail */
-.product-rail {
-  display: flex;
-  gap: 1.5rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 1rem;
-  scrollbar-width: none;
+/* Service card base */
+.service-card {
+  @apply relative rounded-2xl p-7 transition-all duration-500 overflow-hidden;
+  @apply bg-white border border-gray-100;
 }
-.product-rail::-webkit-scrollbar { display: none; }
-.product-rail > * { scroll-snap-align: start; flex-shrink: 0; }
+.service-card:hover {
+  @apply shadow-xl -translate-y-1;
+}
+.service-card.filled-dark {
+  @apply bg-primary-900 border-primary-900 text-white;
+}
+.service-card.filled-accent {
+  @apply bg-primary-600 border-primary-600 text-white;
+}
 
-/* Marquee */
-@keyframes ticker {
+/* Number badge */
+.num-badge {
+  @apply w-10 h-10 rounded-full border-2 border-gray-200 flex items-center justify-center;
+  @apply text-sm font-bold text-gray-400;
+}
+.filled-dark .num-badge,
+.filled-accent .num-badge {
+  @apply border-white/30 text-white/60;
+}
+
+/* Floating icon badge on images */
+.icon-badge {
+  @apply w-14 h-14 rounded-2xl flex items-center justify-center;
+  @apply bg-primary-600 text-white shadow-lg;
+}
+
+/* Service showcase card */
+.showcase-card {
+  @apply bg-white rounded-2xl overflow-hidden transition-all duration-300;
+  @apply hover:shadow-xl hover:-translate-y-1;
+}
+
+/* Circle arrow button */
+.circle-arrow {
+  @apply w-12 h-12 rounded-full flex items-center justify-center;
+  @apply bg-primary-600 text-white hover:bg-primary-700 transition-colors;
+}
+
+/* Light tinted section bg */
+.bg-tint {
+  background-color: #F0F7FF;
+}
+
+/* Drop cap */
+.drop-cap::first-letter {
+  @apply text-5xl font-display float-left mr-2 text-primary-600;
+  line-height: 0.85;
+}
+
+/* Form input - Mednix style */
+.form-input-mednix {
+  @apply w-full px-4 py-3.5 rounded-xl bg-white border border-gray-200 text-secondary-800;
+  @apply placeholder-gray-400 text-sm;
+  @apply focus:outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition-all;
+}
+
+/* Hours table row */
+.hours-row {
+  @apply flex justify-between py-3 border-b border-gray-200 last:border-0;
+  @apply text-sm;
+}
+
+/* Breadcrumb pill */
+.breadcrumb-pill {
+  @apply inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 text-sm;
+}
+
+/* Marquee animation */
+@keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-.ticker { animation: ticker 40s linear infinite; }
-
-/* Fade-in on scroll */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Image duotone overlay */
-.duotone {
-  @apply relative;
-}
-.duotone::after {
-  content: '';
-  @apply absolute inset-0;
-  background: linear-gradient(135deg, rgba(21,101,192,0.15) 0%, rgba(220,38,38,0.08) 100%);
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-
-/* Diagonal section divider */
-.clip-slant {
-  clip-path: polygon(0 0, 100% 4%, 100% 100%, 0 96%);
-}
-
-/* Card with left accent border */
-.card-accent-left {
-  @apply relative bg-white rounded-sm overflow-hidden;
-  border-left: 3px solid #1565C0;
-}
-
-/* Ring button */
-.btn-ring {
-  @apply relative inline-flex items-center justify-center;
-  @apply px-6 py-3 text-sm font-semibold tracking-wide uppercase;
-  @apply border-2 border-current transition-all duration-300;
-}
-.btn-ring:hover {
-  @apply bg-primary-600 text-white border-primary-600;
-}
-
-/* Filled button */
-.btn-solid {
-  @apply inline-flex items-center gap-2;
-  @apply px-7 py-3.5 text-sm font-bold tracking-wide uppercase;
-  @apply bg-primary-600 text-white transition-all duration-300;
-}
-.btn-solid:hover {
-  @apply bg-primary-700 shadow-lg;
-}
-
-/* Thin separator */
-.sep {
-  @apply w-full h-px bg-secondary-200/40;
-}
-
-/* Stacked number list */
-.num-badge {
-  @apply inline-flex items-center justify-center w-10 h-10 text-sm font-bold;
-  @apply border-2 border-primary-600 text-primary-600 rounded-full;
-}
-
-/* Editorial quote marks */
-.quote-mark {
-  font-family: 'DM Serif Display', serif;
-  font-size: 6rem;
-  line-height: 1;
-  color: rgba(21, 101, 192, 0.1);
-}
+.animate-marquee { animation: marquee 35s linear infinite; }

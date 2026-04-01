@@ -1,65 +1,92 @@
 'use client'
 
-import { useRef } from 'react'
-import Link from 'next/link'
+import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { ArrowUpRight, Phone } from 'lucide-react'
+import Image from 'next/image'
+import { Clock, Send } from 'lucide-react'
+import { useSiteImage } from '@/hooks/use-site-image'
 
 export function CTA() {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+
+  const bgImg = useSiteImage(
+    'cta-background',
+    'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80'
+  )
+
+  const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' })
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setForm((p) => ({ ...p, [e.target.name]: e.target.value }))
+  }
+  const handleSubmit = (e: React.FormEvent) => e.preventDefault()
 
   return (
-    <section ref={ref} className="py-28 lg:py-36">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="relative bg-primary-600 overflow-hidden"
-        >
-          {/* Background decoration */}
-          <div className="absolute top-0 right-0 w-1/2 h-full opacity-10">
-            <svg viewBox="0 0 400 400" className="w-full h-full" fill="none">
-              <circle cx="300" cy="200" r="300" stroke="white" strokeWidth="0.5" />
-              <circle cx="300" cy="200" r="200" stroke="white" strokeWidth="0.5" />
-              <circle cx="300" cy="200" r="100" stroke="white" strokeWidth="0.5" />
-            </svg>
-          </div>
+    <section ref={ref} className="relative">
+      <div className="grid lg:grid-cols-2">
+        {/* Left - Image + Hours */}
+        <div className="relative min-h-[400px] lg:min-h-0">
+          <Image src={bgImg} alt="Healthcare" fill className="object-cover" />
+          <div className="absolute inset-0 bg-secondary-900/60" />
 
-          <div className="relative px-10 py-16 md:px-16 md:py-20 lg:px-24 lg:py-24">
-            <div className="max-w-2xl">
-              <span className="label-sm text-primary-200 mb-5 block">Get Started</span>
-
-              <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-white tracking-tight leading-[1]">
-                Ready to Improve
-                <br />
-                Quality of <span className="italic">Life?</span>
-              </h2>
-
-              <p className="mt-6 text-primary-100/70 text-lg max-w-lg leading-relaxed">
-                Schedule a free consultation with our medical equipment specialists.
-                We&apos;ll help you find the perfect solution.
-              </p>
-
-              <div className="mt-10 flex flex-wrap items-center gap-5">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-primary-700 text-sm font-bold uppercase tracking-wide hover:bg-gray-50 transition-colors"
-                >
-                  Book Consultation
-                  <ArrowUpRight className="w-4 h-4" />
-                </Link>
-                <a
-                  href="tel:+19084286253"
-                  className="inline-flex items-center gap-2.5 text-sm font-semibold uppercase tracking-[0.12em] text-white/70 hover:text-white transition-colors"
-                >
-                  <Phone className="w-4 h-4" />
-                  (908) 428-6253
-                </a>
+          {/* Hours overlay at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm p-8">
+            <div className="flex items-start gap-5">
+              <div className="w-12 h-12 rounded-xl bg-primary-50 flex items-center justify-center shrink-0">
+                <Clock className="w-6 h-6 text-primary-600" />
+              </div>
+              <div className="flex-1 space-y-0">
+                <div className="hours-row">
+                  <span className="text-secondary-600">Mon - Fri</span>
+                  <span className="font-semibold text-secondary-900">9:00 - 18:00</span>
+                </div>
+                <div className="hours-row">
+                  <span className="text-secondary-600">Saturday</span>
+                  <span className="font-semibold text-secondary-900">10:00 - 16:00</span>
+                </div>
+                <div className="hours-row">
+                  <span className="text-secondary-600">Emergency</span>
+                  <span className="font-semibold text-accent-600">24/7 Available</span>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Right - Appointment form */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="bg-white p-8 md:p-12 lg:p-14"
+        >
+          <span className="section-tag mb-3">Get in Touch</span>
+          <h2 className="font-display text-3xl md:text-4xl text-secondary-900 tracking-tight mt-2">
+            Book <span className="text-primary-600 italic">Consultation</span>
+          </h2>
+
+          <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Your Name" className="form-input-mednix" required />
+              <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="Email Address" className="form-input-mednix" required />
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="Phone" className="form-input-mednix" />
+              <select name="subject" value={form.subject} onChange={handleChange} className="form-input-mednix" required>
+                <option value="">Select Subject</option>
+                <option value="wheelchair">Wheelchairs</option>
+                <option value="mobility">Mobility Aids</option>
+                <option value="diabetic">Diabetic Care</option>
+                <option value="orthopedic">Orthopedic Braces</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <textarea name="message" value={form.message} onChange={handleChange} rows={4} placeholder="Type Your Message" className="form-input-mednix resize-none" required />
+            <button type="submit" className="pill-btn">
+              Book Consultation
+              <Send className="w-4 h-4" />
+            </button>
+          </form>
         </motion.div>
       </div>
     </section>
