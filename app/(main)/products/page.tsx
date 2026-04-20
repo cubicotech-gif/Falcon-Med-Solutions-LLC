@@ -185,9 +185,9 @@ export default function ProductsPage() {
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-5 shrink-0">
-                <a href="tel:+19084286253" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white rounded-full text-primary-700 text-sm font-bold uppercase tracking-wider hover:bg-gray-50 transition-colors">
+                <a href="tel:+16093569212" className="inline-flex items-center gap-2 px-7 py-3.5 bg-white rounded-full text-primary-700 text-sm font-bold uppercase tracking-wider hover:bg-gray-50 transition-colors">
                   <Phone className="w-4 h-4 text-accent-600" />
-                  (908) 428-6253
+                  (609) 356-9212
                 </a>
                 <Link href="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border-2 border-white/40 text-white text-sm font-bold uppercase tracking-wider hover:bg-white/10 transition-all">
                   Free Consultation

@@ -38,15 +38,15 @@ export function CTA() {
               <div className="flex-1 space-y-0">
                 <div className="hours-row">
                   <span className="text-secondary-600 font-medium">Mon - Fri</span>
-                  <span className="font-bold text-primary-800">9:00 - 18:00</span>
-                </div>
-                <div className="hours-row">
-                  <span className="text-secondary-600 font-medium">Saturday</span>
                   <span className="font-bold text-primary-800">10:00 - 16:00</span>
                 </div>
                 <div className="hours-row">
-                  <span className="text-secondary-600 font-medium">Emergency</span>
-                  <span className="font-bold text-accent-600">24/7 Available</span>
+                  <span className="text-secondary-600 font-medium">Weekends</span>
+                  <span className="font-bold text-accent-600">Closed</span>
+                </div>
+                <div className="hours-row">
+                  <span className="text-secondary-600 font-medium">Holidays</span>
+                  <span className="font-bold text-accent-600">Closed</span>
                 </div>
               </div>
             </div>
