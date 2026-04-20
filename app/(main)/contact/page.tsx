@@ -58,10 +58,10 @@ export default function ContactPage() {
       <section className="bg-white">
         <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6 -mt-8 relative z-10">
           {[
-            { icon: Phone, label: 'Phone', value: '(908) 428-6253', sub: 'Mon-Fri 9AM-6PM', href: 'tel:+19084286253', color: 'accent' as const },
+            { icon: Phone, label: 'Phone', value: '(609) 356-9212', sub: 'Daily 10AM-4PM', href: 'tel:+16093569212', color: 'accent' as const },
             { icon: Mail, label: 'Email', value: 'info@falconmedsolutions.com', sub: 'Reply within 24h', href: 'mailto:info@falconmedsolutions.com', color: 'primary' as const },
-            { icon: MapPin, label: 'Address', value: '1811 Lincoln Hwy', sub: 'Edison, NJ 08817', href: '#map', color: 'accent' as const },
-            { icon: Clock, label: 'Hours', value: 'Mon-Fri: 9AM-6PM', sub: 'Sat: 10AM-4PM', href: undefined, color: 'primary' as const },
+            { icon: MapPin, label: 'Address', value: '668 US-208 Unit D', sub: 'Hillsborough, NJ 008844', href: '#map', color: 'accent' as const },
+            { icon: Clock, label: 'Hours', value: 'Daily: 10AM-4PM', sub: 'Closed Weekends & Holidays', href: undefined, color: 'primary' as const },
           ].map((info) => {
             const Icon = info.icon
             const Tag = info.href ? 'a' : 'div'
@@ -131,7 +131,7 @@ export default function ContactPage() {
             <Reveal className="lg:col-span-2" delay={0.15}>
               <div className="bg-white rounded-2xl overflow-hidden shadow-sm h-full min-h-[450px]" id="map">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3033.123456789!2d-74.3456!3d40.5234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s1811+Lincoln+Hwy+Edison+NJ+08817!5e0!3m2!1sen!2sus!4v1234567890"
+                  src="https://www.google.com/maps?q=668+US-208+Unit+D+Hillsborough+NJ+008844&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0, minHeight: '100%' }}

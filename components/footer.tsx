@@ -92,14 +92,14 @@ export function Footer() {
                 <div className="w-8 h-8 rounded-lg bg-accent-600/20 flex items-center justify-center shrink-0 mt-0.5">
                   <MapPin className="w-4 h-4 text-accent-400" />
                 </div>
-                <span className="text-sm text-primary-200/70">1811 Lincoln Hwy,<br />Edison, NJ 08817</span>
+                <span className="text-sm text-primary-200/70">668 US-208 Unit D,<br />Hillsborough, NJ 008844</span>
               </li>
               <li>
-                <a href="tel:+19084286253" className="flex items-center gap-3 hover:text-accent-400 transition-colors">
+                <a href="tel:+16093569212" className="flex items-center gap-3 hover:text-accent-400 transition-colors">
                   <div className="w-8 h-8 rounded-lg bg-primary-600/20 flex items-center justify-center shrink-0">
                     <Phone className="w-4 h-4 text-primary-300" />
                   </div>
-                  <span className="text-sm text-primary-200/70">(908) 428-6253</span>
+                  <span className="text-sm text-primary-200/70">(609) 356-9212</span>
                 </a>
               </li>
               <li>
@@ -114,7 +114,7 @@ export function Footer() {
                 <div className="w-8 h-8 rounded-lg bg-primary-600/20 flex items-center justify-center shrink-0 mt-0.5">
                   <Clock className="w-4 h-4 text-primary-300" />
                 </div>
-                <span className="text-sm text-primary-200/70">Mon-Fri: 9AM-6PM<br />Sat: 10AM-4PM</span>
+                <span className="text-sm text-primary-200/70">Daily: 10AM-4PM<br />Closed Weekends &amp; Holidays</span>
               </li>
             </ul>
           </div>

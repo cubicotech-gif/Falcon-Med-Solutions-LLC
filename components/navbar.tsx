@@ -40,11 +40,11 @@ export function Navbar() {
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5 text-accent-400" />
-              Mon - Fri: 9:00 AM - 6:00 PM
+              Daily: 10:00 AM - 4:00 PM (Closed Weekends & Holidays)
             </span>
             <span className="flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-accent-400" />
-              1811 Lincoln Hwy, Edison, NJ 08817
+              668 US-208 Unit D, Hillsborough, NJ 008844
             </span>
           </div>
           <div className="flex items-center gap-5">
@@ -52,9 +52,9 @@ export function Navbar() {
               <Mail className="w-3.5 h-3.5 text-primary-300" />
               info@falconmedsolutions.com
             </a>
-            <a href="tel:+19084286253" className="flex items-center gap-1.5 hover:text-accent-300 transition-colors">
+            <a href="tel:+16093569212" className="flex items-center gap-1.5 hover:text-accent-300 transition-colors">
               <Phone className="w-3.5 h-3.5 text-accent-300" />
-              (908) 428-6253
+              (609) 356-9212
             </a>
           </div>
         </div>
@@ -87,8 +87,8 @@ export function Navbar() {
               </div>
               <div>
                 <p className="text-[10px] text-secondary-400 uppercase tracking-wider font-semibold">Call Us Now</p>
-                <a href="tel:+19084286253" className="text-base font-bold text-primary-800 hover:text-accent-600 transition-colors">
-                  (908) 428-6253
+                <a href="tel:+16093569212" className="text-base font-bold text-primary-800 hover:text-accent-600 transition-colors">
+                  (609) 356-9212
                 </a>
               </div>
             </div>
@@ -230,9 +230,9 @@ export function Navbar() {
                   Get a Quote
                   <ArrowRight className="w-4 h-4" />
                 </Link>
-                <a href="tel:+19084286253" className="flex items-center justify-center gap-3 py-3 text-primary-700 font-semibold">
+                <a href="tel:+16093569212" className="flex items-center justify-center gap-3 py-3 text-primary-700 font-semibold">
                   <Phone className="w-5 h-5 text-accent-600" />
-                  (908) 428-6253
+                  (609) 356-9212
                 </a>
               </div>
             </div>
